@@ -3,9 +3,16 @@
     {
       "id": "sample001",
       "title": "深度学习在自然语言处理中的应用研究",
-      "authors": ["张三", "李四"],
+      "authors": [
+        "张三",
+        "李四"
+      ],
       "abstract": "本文系统性地介绍了深度学习技术在自然语言处理领域的最新进展，包括词向量表示、循环神经网络、注意力机制等关键技术。",
-      "keywords": ["深度学习", "自然语言处理", "神经网络"],
+      "keywords": [
+        "深度学习",
+        "自然语言处理",
+        "神经网络"
+      ],
       "category": "人工智能",
       "publishDate": "2024-03-15",
       "fileName": "sample_paper.pdf",
@@ -14,10 +21,33 @@
       "filePath": "papers/2024/ai/sample_paper.pdf",
       "downloadCount": 0,
       "createdAt": "2024-03-15T10:00:00.000Z"
+    },
+    {
+      "id": "mc3meiuvlzhop",
+      "title": "BERT",
+      "authors": [
+        "Google AI Language"
+      ],
+      "abstract": "We introduce a new language representation model called BERT, which stands for\nBidirectional Encoder Representations from\nTransformers. Unlike recent language representation models (Peters et al., 2018a; Radford et al., 2018), BERT is designed to pretrain deep bidirectional representations from\nunlabeled text by jointly conditioning on both\nleft and right context in all layers. As a result, the pre-trained BERT model can be finetuned with just one additional output layer\nto create state-of-the-art models for a wide\nrange of tasks, such as question answering and\nlanguage inference, without substantial taskspecific architecture modifications.\nBERT is conceptually simple and empirically\npowerful. It obtains new state-of-the-art results on eleven natural language processing\ntasks, including pushing the GLUE score to\n80.5% (7.7% point absolute improvement),\nMultiNLI accuracy to 86.7% (4.6% absolute\nimprovement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) and SQuAD v2.0 Test F1 to 83.1\n(5.1 point absolute improvement).",
+      "keywords": [
+        "Attention",
+        "Transformer"
+      ],
+      "category": "人工智能",
+      "publishDate": "2025-06-19",
+      "fileName": "BERT.pdf",
+      "fileSize": 775166,
+      "repository": "master",
+      "filePath": "papers/2025/ai/1750352023381_bert.pdf",
+      "downloadCount": 0,
+      "createdAt": "2025-06-19T16:53:45.848Z"
     }
   ],
   "metadata": {
-    "totalCount": 1,
-    "lastUpdated": "2024-03-15T10:00:00.000Z"
+    "totalCount": 2,
+    "lastUpdated": "2025-06-19T16:53:46.224Z",
+    "categories": {
+      "人工智能": 2
+    }
   }
 }
