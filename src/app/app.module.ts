@@ -1,4 +1,4 @@
-// 2. src/app/app.module.ts
+// src/app/app.module.ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,10 +17,10 @@ import { PaperCardComponent } from './shared/components/paper-card/paper-card.co
 import { SearchBoxComponent } from './shared/components/search-box/search-box.component';
 import { LoadingComponent } from './shared/components/loading/loading.component';
 import { PaginationComponent } from './shared/components/pagination/pagination.component';
+import { GitHubConfigComponent } from './shared/components/github-config/github-config.component';
+import { PdfViewerComponent } from './shared/components/pdf-viewer/pdf-viewer.component'; // 新增
 import { TruncatePipe } from './shared/pipes/truncate.pipe';
 import { FileSizePipe } from './shared/pipes/filesize.pipe';
-import {GitHubConfigComponent} from './shared/components/github-config/github-config.component'
-
 
 @NgModule({
   declarations: [
@@ -38,7 +38,8 @@ import {GitHubConfigComponent} from './shared/components/github-config/github-co
     PaginationComponent,
     TruncatePipe,
     FileSizePipe,
-    GitHubConfigComponent
+    GitHubConfigComponent,
+    PdfViewerComponent
   ],
   imports: [
     BrowserModule,

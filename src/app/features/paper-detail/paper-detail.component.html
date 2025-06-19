@@ -1,37 +1,125 @@
+<!-- src/app/features/paper-detail/paper-detail.component.html -->
 <div class="paper-detail-container" *ngIf="paper">
-    <div class="paper-header">
-    <h1>{{paper.title}}</h1>
-    <div class="authors">
+  <!-- 论文信息头部 -->
+  <div class="paper-header">
+    <div class="header-content">
+      <h1>{{paper.title}}</h1>
+      <div class="authors">
         <strong>作者：</strong>
         <span *ngFor="let author of paper.authors; let last = last">
-        {{author}}<span *ngIf="!last">, </span>
+          {{author}}<span *ngIf="!last">, </span>
         </span>
-    </div>
-    <div class="meta">
-        <span class="category">分类：{{paper.category}}</span>
-        <span class="date">发布：{{paper.publishDate | date:'yyyy-MM-dd'}}</span>
-        <span class="size">大小：{{paper.fileSize | filesize}}</span>
-    </div>
+      </div>
+      <div class="meta">
+        <span class="category">
+          <i class="icon">🏷️</i>
+          分类：{{paper.category}}
+        </span>
+        <span class="date">
+          <i class="icon">📅</i>
+          发布：{{paper.publishDate | date:'yyyy-MM-dd'}}
+        </span>
+        <span class="size">
+          <i class="icon">📦</i>
+          大小：{{paper.fileSize | filesize}}
+        </span>
+        <span class="downloads">
+          <i class="icon">📥</i>
+          下载：{{paper.downloadCount}} 次
+        </span>
+      </div>
     </div>
     
-    <div class="paper-content">
-    <div class="abstract" *ngIf="paper.abstract">
+    <div class="header-actions">
+      <button (click)="downloadPaper()" class="btn btn-primary">
+        📥 下载论文
+      </button>
+      <button (click)="goBack()" class="btn btn-secondary">
+        ← 返回
+      </button>
+    </div>
+  </div>
+
+  <!-- 视图切换选项卡 -->
+  <div class="view-tabs">
+    <button 
+      class="tab-btn"
+      [class.active]="currentView === 'info'"
+      (click)="switchView('info')">
+      📋 论文信息
+    </button>
+    <button 
+      class="tab-btn"
+      [class.active]="currentView === 'preview'"
+      (click)="switchView('preview')">
+      📄 PDF预览
+    </button>
+  </div>
+
+  <!-- 论文信息视图 -->
+  <div class="paper-content" [class.hidden]="currentView !== 'info'">
+    <div class="info-section">
+      <div class="abstract" *ngIf="paper.abstract">
         <h3>📄 摘要</h3>
-        <p>{{paper.abstract}}</p>
-    </div>
-    
-    <div class="keywords" *ngIf="paper.keywords?.length">
+        <p class="abstract-text">{{paper.abstract}}</p>
+      </div>
+      
+      <div class="keywords" *ngIf="paper.keywords?.length">
         <h3>🏷️ 关键词</h3>
         <div class="keyword-tags">
-        <span *ngFor="let keyword of paper.keywords" class="keyword">{{keyword}}</span>
+          <span *ngFor="let keyword of paper.keywords" class="keyword">{{keyword}}</span>
         </div>
+      </div>
+
+      <div class="paper-details">
+        <h3>📊 详细信息</h3>
+        <div class="details-grid">
+          <div class="detail-item">
+            <label>文件名</label>
+            <span>{{paper.fileName}}</span>
+          </div>
+          <div class="detail-item">
+            <label>存储仓库</label>
+            <span>{{paper.repository}}</span>
+          </div>
+          <div class="detail-item">
+            <label>文件路径</label>
+            <span class="file-path">{{paper.filePath}}</span>
+          </div>
+          <div class="detail-item">
+            <label>上传时间</label>
+            <span>{{paper.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+          </div>
+        </div>
+      </div>
     </div>
-    
-    <div class="actions">
-        <button (click)="downloadPaper()" class="btn btn-primary">📥 下载论文</button>
-        <button (click)="goBack()" class="btn">← 返回</button>
+  </div>
+
+  <!-- PDF预览视图 -->
+  <div class="pdf-preview-section" [class.hidden]="currentView !== 'preview'">
+    <div class="preview-container">
+      <app-pdf-viewer 
+        [pdfUrl]="getPdfUrl()"
+        [showToolbar]="true">
+      </app-pdf-viewer>
     </div>
-    </div>
+  </div>
 </div>
 
-<div class="loading" *ngIf="!paper">加载中...</div>
+<!-- 加载状态 -->
+<div class="loading-container" *ngIf="!paper && !error">
+  <app-loading message="正在加载论文详情..."></app-loading>
+</div>
+
+<!-- 错误状态 -->
+<div class="error-container" *ngIf="error">
+  <div class="error-content">
+    <div class="error-icon">❌</div>
+    <h2>加载失败</h2>
+    <p>{{error}}</p>
+    <div class="error-actions">
+      <button (click)="reloadPaper()" class="btn btn-primary">🔄 重新加载</button>
+      <button (click)="goBack()" class="btn btn-secondary">← 返回列表</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,147 @@
+<!-- src/app/shared/components/pdf-viewer/pdf-viewer.component.html -->
+<div class="pdf-viewer-container" (keydown)="onKeyDown($event)" tabindex="0">
+  <!-- 工具栏 -->
+  <div class="pdf-toolbar" *ngIf="showToolbar && !isLoading && !error">
+    <!-- 页面导航 -->
+    <div class="toolbar-section">
+      <button 
+        class="toolbar-btn" 
+        [disabled]="currentPage <= 1"
+        (click)="previousPage()"
+        title="上一页 (←)">
+        ⬅️
+      </button>
+      
+      <div class="page-info">
+        <input 
+          type="number" 
+          [value]="currentPage"
+          (change)="goToPage(+$any($event.target).value)"
+          [min]="1" 
+          [max]="totalPages"
+          class="page-input">
+        <span class="page-total">/ {{totalPages}}</span>
+      </div>
+      
+      <button 
+        class="toolbar-btn" 
+        [disabled]="currentPage >= totalPages"
+        (click)="nextPage()"
+        title="下一页 (→)">
+        ➡️
+      </button>
+    </div>
+
+    <!-- 缩放控制 -->
+    <div class="toolbar-section">
+      <button 
+        class="toolbar-btn" 
+        (click)="zoomOut()"
+        [disabled]="isZoomOutDisabled()"
+        title="缩小 (-)">
+        🔍-
+      </button>
+      
+      <select 
+        [value]="scale" 
+        (change)="onScaleChange($event)"
+        class="scale-select">
+        <option *ngFor="let option of scaleOptions" [value]="option.value">
+          {{option.label}}
+        </option>
+      </select>
+      
+      <button 
+        class="toolbar-btn" 
+        (click)="zoomIn()"
+        [disabled]="isZoomInDisabled()"
+        title="放大 (+)">
+        🔍+
+      </button>
+    </div>
+
+    <!-- 旋转控制 -->
+    <div class="toolbar-section">
+      <button 
+        class="toolbar-btn" 
+        (click)="rotateCounterClockwise()"
+        title="逆时针旋转">
+        ↺
+      </button>
+      
+      <button 
+        class="toolbar-btn" 
+        (click)="rotateClockwise()"
+        title="顺时针旋转">
+        ↻
+      </button>
+    </div>
+
+    <!-- 其他操作 -->
+    <div class="toolbar-section">
+      <button 
+        class="toolbar-btn primary" 
+        (click)="downloadPDF()"
+        title="下载PDF">
+        📥 下载
+      </button>
+    </div>
+  </div>
+
+  <!-- PDF内容区域 -->
+  <div class="pdf-content">
+    <!-- 加载状态 -->
+    <div class="loading-container" *ngIf="isLoading">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">正在加载PDF...</p>
+      <div class="progress-bar" *ngIf="loadingProgress > 0">
+        <div class="progress-fill" [style.width.%]="loadingProgress"></div>
+        <span class="progress-text">{{loadingProgress}}%</span>
+      </div>
+    </div>
+
+    <!-- 错误状态 -->
+    <div class="error-container" *ngIf="error">
+      <div class="error-icon">❌</div>
+      <h3>PDF加载失败</h3>
+      <p class="error-message">{{error}}</p>
+      <button class="retry-btn" (click)="loadPDF()">🔄 重新加载</button>
+    </div>
+
+    <!-- PDF画布 -->
+    <div class="canvas-container" *ngIf="!isLoading && !error">
+      <canvas 
+        #pdfCanvas 
+        class="pdf-canvas"
+        [class.rendering]="isRendering">
+      </canvas>
+      
+      <!-- 渲染中遮罩 -->
+      <div class="rendering-overlay" *ngIf="isRendering">
+        <div class="rendering-spinner"></div>
+        <span>渲染中...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 快捷键提示 -->
+  <div class="shortcuts-hint" *ngIf="showToolbar && !isLoading && !error">
+    <details>
+      <summary>⌨️ 快捷键</summary>
+      <div class="shortcuts-list">
+        <div class="shortcut-item">
+          <kbd>←</kbd> <kbd>→</kbd> 
+          <span>翻页</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>+</kbd> <kbd>-</kbd> 
+          <span>缩放</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>0</kbd> 
+          <span>重置缩放</span>
+        </div>
+      </div>
+    </details>
+  </div>
+</div>

@@ -1,4 +1,3 @@
-// 15. src/index.html
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -7,8 +6,30 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <!-- PDF.js 库 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  
+  <style>
+    /* PDF.js 全局样式重置 */
+    .pdf-viewer-container canvas {
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 <body>
   <app-root></app-root>
+  
+  <!-- PDF.js Worker 配置 -->
+  <script>
+    // 确保PDF.js正确加载
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      console.log('PDF.js loaded successfully');
+    } else {
+      console.error('PDF.js failed to load');
+    }
+  </script>
 </body>
 </html>
