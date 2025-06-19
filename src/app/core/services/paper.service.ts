@@ -12,10 +12,12 @@ export class PaperService {
 
   constructor(private http: HttpClient) {
     // 根据环境配置数据路径
+    console.log("environment is",environment)
     if (environment.githubPagesMode && environment.baseHref) {
       // GitHub Pages 模式：添加仓库前缀
-      // 从 /PaperSite/ 变为 /PaperSite/data/
+      // 从 /data/ 变为 /PaperSite/data/
       const basePath = environment.baseHref.replace(/\/$/, ''); // 移除末尾的斜杠
+      console.log('basePath is:', basePath);
       this.dataPath = `${basePath}/data/`;
     } else {
       // 开发模式：使用根路径
