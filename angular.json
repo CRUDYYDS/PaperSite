@@ -59,8 +59,8 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "baseHref": "/papers-site/",
-              "deployUrl": "/papers-site/"
+              "baseHref": "/PaperSite/",
+              "deployUrl": "/PaperSite/"
             },
             "development": {
               "buildOptimizer": false,

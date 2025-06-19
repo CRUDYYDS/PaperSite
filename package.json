@@ -1,11 +1,12 @@
 {
-  "name": "papers-site",
+  "name": "Paper Site",
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "build:prod": "ng build --configuration production",
+    "build:github": "ng build --configuration production --base-href=/PaperSite/ --deploy-url=/PaperSite/",
     "test": "ng test",
     "test:ci": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint"
