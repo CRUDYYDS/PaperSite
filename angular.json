@@ -60,7 +60,13 @@
               "vendorChunk": false,
               "buildOptimizer": true,
               "baseHref": "/PaperSite/",
-              "deployUrl": "/PaperSite/"
+              "deployUrl": "/PaperSite/",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             },
             "development": {
               "buildOptimizer": false,
