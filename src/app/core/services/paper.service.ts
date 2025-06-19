@@ -12,16 +12,25 @@ export class PaperService {
 
   constructor(private http: HttpClient) {
     // 根据环境配置数据路径
-    if (environment.githubPagesMode) {
-      this.dataPath = `${environment.baseHref}data/`;
+    if (environment.githubPagesMode && environment.baseHref) {
+      // GitHub Pages 模式：添加仓库前缀
+      // 从 /PaperSite/ 变为 /PaperSite/data/
+      const basePath = environment.baseHref.replace(/\/$/, ''); // 移除末尾的斜杠
+      this.dataPath = `${basePath}/data/`;
     } else {
+      // 开发模式：使用根路径
       this.dataPath = '/data/';
     }
+    
+    console.log('PaperService dataPath:', this.dataPath);
   }
 
   async getPapers(options: any = {}): Promise<{ papers: Paper[], total: number }> {
     try {
-      const response = await this.http.get<{papers: Paper[]}>(`${this.dataPath}papers.json`).toPromise();
+      const url = `${this.dataPath}papers.json`;
+      console.log('Fetching papers from:', url);
+      
+      const response = await this.http.get<{papers: Paper[]}>(url).toPromise();
       let papers = response?.papers || [];
 
       // 分类过滤
@@ -42,41 +51,49 @@ export class PaperService {
 
       return { papers: paginatedPapers, total: papers.length };
     } catch (error) {
-      console.error('Failed to load papers:', error);
+      console.error('Failed to load papers from:', `${this.dataPath}papers.json`, error);
       return { papers: [], total: 0 };
     }
   }
 
   async getPaperById(id: string): Promise<Paper | null> {
     try {
-      const response = await this.http.get<{papers: Paper[]}>(`${this.dataPath}papers.json`).toPromise();
+      const url = `${this.dataPath}papers.json`;
+      console.log('Fetching paper by ID from:', url);
+      
+      const response = await this.http.get<{papers: Paper[]}>(url).toPromise();
       const paper = response?.papers.find(p => p.id === id);
       
       if (paper && environment.githubPagesMode) {
         // 修正 GitHub Pages 环境下的文件路径
-        paper.fileUrl = `${environment.baseHref}${paper.filePath}`;
+        const basePath = environment.baseHref?.replace(/\/$/, '') || '';
+        paper.fileUrl = `${basePath}/${paper.filePath}`;
       }
       
       return paper || null;
     } catch (error) {
-      console.error('Failed to load paper:', error);
+      console.error('Failed to load paper by ID:', error);
       return null;
     }
   }
 
   async getCategories(): Promise<Category[]> {
     try {
-      const response = await this.http.get<{categories: Category[]}>(`${this.dataPath}categories.json`).toPromise();
+      const url = `${this.dataPath}categories.json`;
+      console.log('Fetching categories from:', url);
+      
+      const response = await this.http.get<{categories: Category[]}>(url).toPromise();
       return response?.categories || [];
     } catch (error) {
-      console.error('Failed to load categories:', error);
+      console.error('Failed to load categories from:', `${this.dataPath}categories.json`, error);
       return [];
     }
   }
 
   async searchPapers(query: string, options: any = {}): Promise<Paper[]> {
     try {
-      const response = await this.http.get<{papers: Paper[]}>(`${this.dataPath}papers.json`).toPromise();
+      const url = `${this.dataPath}papers.json`;
+      const response = await this.http.get<{papers: Paper[]}>(url).toPromise();
       const papers = response?.papers || [];
       const searchTerm = query.toLowerCase();
       
