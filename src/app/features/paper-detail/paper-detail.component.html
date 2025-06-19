@@ -1,0 +1,37 @@
+<div class="paper-detail-container" *ngIf="paper">
+    <div class="paper-header">
+    <h1>{{paper.title}}</h1>
+    <div class="authors">
+        <strong>作者：</strong>
+        <span *ngFor="let author of paper.authors; let last = last">
+        {{author}}<span *ngIf="!last">, </span>
+        </span>
+    </div>
+    <div class="meta">
+        <span class="category">分类：{{paper.category}}</span>
+        <span class="date">发布：{{paper.publishDate | date:'yyyy-MM-dd'}}</span>
+        <span class="size">大小：{{paper.fileSize | filesize}}</span>
+    </div>
+    </div>
+    
+    <div class="paper-content">
+    <div class="abstract" *ngIf="paper.abstract">
+        <h3>📄 摘要</h3>
+        <p>{{paper.abstract}}</p>
+    </div>
+    
+    <div class="keywords" *ngIf="paper.keywords?.length">
+        <h3>🏷️ 关键词</h3>
+        <div class="keyword-tags">
+        <span *ngFor="let keyword of paper.keywords" class="keyword">{{keyword}}</span>
+        </div>
+    </div>
+    
+    <div class="actions">
+        <button (click)="downloadPaper()" class="btn btn-primary">📥 下载论文</button>
+        <button (click)="goBack()" class="btn">← 返回</button>
+    </div>
+    </div>
+</div>
+
+<div class="loading" *ngIf="!paper">加载中...</div>

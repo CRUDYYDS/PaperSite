@@ -1,0 +1,103 @@
+<div class="github-config-container">
+    <div class="config-header">
+    <h3>🔧 GitHub配置</h3>
+    <p class="subtitle">配置GitHub仓库访问信息以启用上传功能</p>
+    </div>
+
+    <form [formGroup]="configForm" (ngSubmit)="onSave()">
+    <div class="form-group">
+        <label for="owner">GitHub用户名/组织名 *</label>
+        <input 
+        id="owner"
+        type="text" 
+        formControlName="owner" 
+        placeholder="例如: your-username"
+        class="form-control">
+        <small class="help-text">仓库所有者的GitHub用户名</small>
+    </div>
+
+    <div class="form-group">
+        <label for="repo">仓库名称 *</label>
+        <input 
+        id="repo"
+        type="text" 
+        formControlName="repo" 
+        placeholder="例如: papers-site"
+        class="form-control">
+        <small class="help-text">用于存储论文的GitHub仓库名称</small>
+    </div>
+
+    <div class="form-group">
+        <label for="token">Personal Access Token *</label>
+        <div class="token-input-group">
+        <input 
+            id="token"
+            [type]="showToken ? 'text' : 'password'" 
+            formControlName="token" 
+            placeholder="输入GitHub Personal Access Token"
+            class="form-control">
+        <button 
+            type="button" 
+            class="toggle-visibility"
+            (click)="toggleTokenVisibility()"
+            [title]="showToken ? '隐藏Token' : '显示Token'">
+            {{showToken ? '🙈' : '👁️'}}
+        </button>
+        </div>
+        <small class="help-text">
+        Token将仅在当前会话中保存，不会持久化存储
+        </small>
+    </div>
+
+    <div class="token-guide">
+        <details>
+        <summary>📋 如何获取GitHub Personal Access Token？</summary>
+        <ol class="guide-steps">
+            <li>登录GitHub并进入 <strong>Settings</strong></li>
+            <li>点击左侧菜单的 <strong>Developer settings</strong></li>
+            <li>选择 <strong>Personal access tokens → Tokens (classic)</strong></li>
+            <li>点击 <strong>Generate new token (classic)</strong></li>
+            <li>设置Token名称和过期时间</li>
+            <li>勾选 <strong>repo</strong> 权限（完整仓库访问）</li>
+            <li>点击 <strong>Generate token</strong> 并复制生成的Token</li>
+        </ol>
+        <div class="warning-box">
+            ⚠️ <strong>重要：</strong>Token只会显示一次，请妥善保管！
+        </div>
+        </details>
+    </div>
+
+    <div class="form-actions">
+        <button 
+        type="button" 
+        (click)="onTest()" 
+        [disabled]="configForm.invalid || isTesting"
+        class="btn btn-secondary">
+        {{isTesting ? '测试中...' : '🔍 测试连接'}}
+        </button>
+        
+        <button 
+        type="submit" 
+        [disabled]="configForm.invalid || isTesting"
+        class="btn btn-primary">
+        {{isConfigured ? '更新配置' : '保存配置'}}
+        </button>
+
+        <button 
+        type="button" 
+        *ngIf="isConfigured"
+        (click)="onClear()"
+        class="btn btn-danger">
+        清除配置
+        </button>
+    </div>
+
+    <!-- 测试结果 -->
+    <div class="test-result" *ngIf="testResult">
+        <div class="alert" [ngClass]="testResult.success ? 'alert-success' : 'alert-error'">
+        <strong>{{testResult.success ? '✅ 连接成功' : '❌ 连接失败'}}</strong>
+        <p>{{testResult.message}}</p>
+        </div>
+    </div>
+    </form>
+</div>

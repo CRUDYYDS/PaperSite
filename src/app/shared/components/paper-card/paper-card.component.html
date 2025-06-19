@@ -1,0 +1,27 @@
+<div class="paper-card" (click)="viewDetails()">
+    <div class="card-header">
+    <h3 class="paper-title">{{paper.title}}</h3>
+    <div class="paper-authors">{{getAuthorsText()}}</div>
+    <span class="category-tag">{{paper.category}}</span>
+    </div>
+    
+    <div class="card-content">
+    <p class="paper-abstract" *ngIf="paper.abstract">
+        {{paper.abstract | truncate:120}}
+    </p>
+    
+    <div class="paper-keywords" *ngIf="paper.keywords?.length">
+        <span *ngFor="let keyword of paper.keywords.slice(0, 3)" class="keyword-tag">
+        {{keyword}}
+        </span>
+    </div>
+    </div>
+    
+    <div class="card-footer">
+    <div class="paper-info">
+        <span class="file-size">{{paper.fileSize | filesize}}</span>
+        <span class="publish-date">{{paper.publishDate | date:'yyyy-MM-dd'}}</span>
+    </div>
+    <button class="btn btn-sm" (click)="downloadPaper($event)">下载</button>
+    </div>
+</div>

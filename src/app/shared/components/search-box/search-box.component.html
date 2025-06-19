@@ -1,0 +1,9 @@
+<div class="search-box">
+    <input 
+    type="text" 
+    [(ngModel)]="searchQuery"
+    (keyup.enter)="onSearch()"
+    placeholder="搜索论文标题或作者..."
+    class="search-input">
+    <button (click)="onSearch()" class="search-btn">🔍</button>
+</div>

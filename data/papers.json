@@ -1,0 +1,23 @@
+{
+  "papers": [
+    {
+      "id": "sample001",
+      "title": "深度学习在自然语言处理中的应用研究",
+      "authors": ["张三", "李四"],
+      "abstract": "本文系统性地介绍了深度学习技术在自然语言处理领域的最新进展，包括词向量表示、循环神经网络、注意力机制等关键技术。",
+      "keywords": ["深度学习", "自然语言处理", "神经网络"],
+      "category": "人工智能",
+      "publishDate": "2024-03-15",
+      "fileName": "sample_paper.pdf",
+      "fileSize": 2048576,
+      "repository": "main",
+      "filePath": "papers/2024/ai/sample_paper.pdf",
+      "downloadCount": 0,
+      "createdAt": "2024-03-15T10:00:00.000Z"
+    }
+  ],
+  "metadata": {
+    "totalCount": 1,
+    "lastUpdated": "2024-03-15T10:00:00.000Z"
+  }
+}

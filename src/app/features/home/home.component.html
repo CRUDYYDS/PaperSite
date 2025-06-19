@@ -1,0 +1,17 @@
+<div class="home-container">
+    <section class="hero">
+    <h1>📚 论文浏览系统</h1>
+    <p>发现和探索学术研究的最佳平台</p>
+    <app-search-box (search)="onSearch($event)"></app-search-box>
+    </section>
+    
+    <section class="recent-papers">
+    <h2>最新论文</h2>
+    <div class="papers-grid">
+        <app-paper-card *ngFor="let paper of recentPapers" [paper]="paper"></app-paper-card>
+    </div>
+    <div class="view-all">
+        <a routerLink="/papers" class="btn btn-primary">查看全部论文</a>
+    </div>
+    </section>
+</div>

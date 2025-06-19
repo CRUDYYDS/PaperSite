@@ -1,0 +1,25 @@
+<div class="search-container">
+    <div class="search-header">
+    <h1>🔍 搜索论文</h1>
+    <app-search-box (search)="onSearch($event)"></app-search-box>
+    </div>
+    
+    <div class="search-results" *ngIf="hasSearched">
+    <div class="results-info">
+        <p>找到 <strong>{{searchResults.length}}</strong> 篇相关论文
+        <span *ngIf="currentQuery"> - "{{currentQuery}}"</span>
+        </p>
+    </div>
+    
+    <div class="results-list" *ngIf="!loading">
+        <app-paper-card *ngFor="let paper of searchResults" [paper]="paper"></app-paper-card>
+    </div>
+    
+    <div class="loading" *ngIf="loading">搜索中...</div>
+    
+    <div class="no-results" *ngIf="searchResults.length === 0 && !loading">
+        <h3>😕 未找到相关论文</h3>
+        <p>请尝试使用其他关键词搜索</p>
+    </div>
+    </div>
+</div>

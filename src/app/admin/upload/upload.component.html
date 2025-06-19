@@ -1,0 +1,324 @@
+<div class="upload-container">
+    <div class="upload-header">
+    <h1>📤 上传论文</h1>
+    <p class="subtitle">将学术论文上传到GitHub仓库</p>
+    </div>
+
+    <!-- GitHub配置状态 -->
+    <div class="config-status">
+    <div class="status-card" [ngClass]="isConfigured ? 'configured' : 'not-configured'">
+        <div class="status-icon">
+        {{isConfigured ? '✅' : '⚙️'}}
+        </div>
+        <div class="status-content">
+        <h3>{{isConfigured ? 'GitHub已配置' : '需要配置GitHub'}}</h3>
+        <p>{{isConfigured ? '可以开始上传论文' : '请先配置GitHub仓库信息'}}</p>
+        </div>
+        <button 
+        class="btn btn-secondary"
+        (click)="toggleConfigForm()">
+        {{showConfigForm ? '隐藏配置' : (isConfigured ? '重新配置' : '立即配置')}}
+        </button>
+    </div>
+    </div>
+
+    <!-- GitHub配置表单 -->
+    <div class="config-section" [class.visible]="showConfigForm">
+    <app-github-config 
+        [isConfigured]="isConfigured"
+        (configSaved)="onConfigSaved()"
+        (configCleared)="onConfigCleared()">
+    </app-github-config>
+    </div>
+
+    <!-- 上传表单 -->
+    <div class="upload-section" *ngIf="isConfigured && !showConfigForm">
+    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+        <!-- 文件选择 -->
+        <div class="form-group full-width">
+            <label class="file-upload-label">
+            <input 
+                type="file" 
+                (change)="onFileSelect($event)" 
+                accept=".pdf"
+                multiple
+                class="file-input"
+                #fileInput>
+            <div class="file-upload-area" 
+                    [class.has-files]="selectedFiles.length > 0"
+                    (dragover)="onDragOver($event)"
+                    (dragleave)="onDragLeave($event)"
+                    (drop)="onDrop($event)">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">
+                <strong>点击选择文件或拖拽到此处</strong>
+                <p>支持多个PDF文件，每个文件最大25MB</p>
+                </div>
+            </div>
+            </label>
+
+            <!-- 已选择的文件列表 -->
+            <div class="selected-files" *ngIf="selectedFiles.length > 0">
+            <h4>已选择的文件 ({{selectedFiles.length}})</h4>
+            <div class="file-list">
+                <div class="file-item" *ngFor="let file of selectedFiles; let i = index">
+                <div class="file-info">
+                    <span class="file-name">{{file.name}}</span>
+                    <span class="file-size">{{file.size | filesize}}</span>
+                </div>
+                <button 
+                    type="button" 
+                    class="remove-file"
+                    (click)="removeFile(i)"
+                    title="移除文件">
+                    ❌
+                </button>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="form-row">
+        <!-- 论文标题 -->
+        <div class="form-group">
+            <label>论文标题 *</label>
+            <input 
+            type="text" 
+            formControlName="title" 
+            placeholder="请输入完整的论文标题"
+            class="form-control">
+            <div class="error-message" *ngIf="uploadForm.get('title')?.invalid && uploadForm.get('title')?.touched">
+            请输入论文标题
+            </div>
+        </div>
+
+        <!-- 分类 -->
+        <div class="form-group">
+            <label>分类 *</label>
+            <select formControlName="category" class="form-control">
+            <option value="">请选择分类</option>
+            <option value="人工智能">🤖 人工智能</option>
+            <option value="机器学习">🧠 机器学习</option>
+            <option value="计算机科学">💻 计算机科学</option>
+            <option value="数学">🔢 数学</option>
+            <option value="物理学">⚛️ 物理学</option>
+            <option value="生物学">🧬 生物学</option>
+            <option value="化学">⚗️ 化学</option>
+            <option value="其他">📚 其他</option>
+            </select>
+            <div class="error-message" *ngIf="uploadForm.get('category')?.invalid && uploadForm.get('category')?.touched">
+            请选择论文分类
+            </div>
+        </div>
+        </div>
+
+        <div class="form-row">
+        <!-- 作者 -->
+        <div class="form-group">
+            <label>作者 *</label>
+            <input 
+            type="text" 
+            formControlName="authors" 
+            placeholder="多个作者用逗号分隔，如：张三, 李四, 王五"
+            class="form-control">
+            <div class="error-message" *ngIf="uploadForm.get('authors')?.invalid && uploadForm.get('authors')?.touched">
+            请输入作者信息
+            </div>
+        </div>
+
+        <!-- 发布日期 -->
+        <div class="form-group">
+            <label>发布日期 *</label>
+            <input 
+            type="date" 
+            formControlName="publishDate" 
+            class="form-control">
+        </div>
+        </div>
+
+        <div class="form-row">
+        <!-- 摘要 -->
+        <div class="form-group full-width">
+            <label>摘要</label>
+            <textarea 
+            formControlName="abstract" 
+            rows="4" 
+            placeholder="请输入论文摘要（可选）"
+            class="form-control"></textarea>
+        </div>
+        </div>
+
+        <div class="form-row">
+        <!-- 关键词 -->
+        <div class="form-group">
+            <label>关键词</label>
+            <input 
+            type="text" 
+            formControlName="keywords" 
+            placeholder="多个关键词用逗号分隔，如：深度学习, 神经网络, AI"
+            class="form-control">
+        </div>
+
+        <!-- 仓库分支 -->
+        <div class="form-group">
+            <label>目标分支</label>
+            <input 
+            type="text" 
+            formControlName="branch" 
+            placeholder="默认: main"
+            class="form-control">
+        </div>
+        </div>
+
+        <!-- 上传选项 -->
+        <div class="upload-options">
+        <div class="option-group">
+            <label class="checkbox-label">
+            <input 
+                type="checkbox" 
+                formControlName="autoGenerate"
+                class="checkbox">
+            <span class="checkmark"></span>
+            自动生成文件名（基于标题和时间戳）
+            </label>
+        </div>
+        
+        <div class="option-group">
+            <label class="checkbox-label">
+            <input 
+                type="checkbox" 
+                formControlName="updateCategories"
+                class="checkbox">
+            <span class="checkmark"></span>
+            自动更新分类统计
+            </label>
+        </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="form-actions">
+        <button 
+            type="button" 
+            (click)="resetForm()" 
+            class="btn btn-secondary"
+            [disabled]="isUploading">
+            🔄 重置表单
+        </button>
+        
+        <button 
+            type="submit" 
+            [disabled]="uploadForm.invalid || selectedFiles.length === 0 || isUploading" 
+            class="btn btn-primary">
+            {{isUploading ? '上传中...' : '🚀 开始上传'}}
+        </button>
+        </div>
+    </form>
+
+    <!-- 上传进度 -->
+    <div class="upload-progress-section" *ngIf="isUploading">
+        <div class="progress-header">
+        <h3>📊 上传进度</h3>
+        <span class="progress-percentage">{{uploadProgress}}%</span>
+        </div>
+        
+        <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="uploadProgress"></div>
+        </div>
+        
+        <div class="progress-details">
+        <p class="current-status">{{uploadStatus}}</p>
+        <div class="file-progress" *ngIf="currentFileIndex >= 0">
+            正在处理: {{getCurrentFileName()}} 
+            ({{currentFileIndex + 1}}/{{selectedFiles.length}})
+        </div>
+        </div>
+
+        <!-- 详细日志 -->
+        <div class="upload-log" *ngIf="uploadLog.length > 0">
+        <details>
+            <summary>查看详细日志</summary>
+            <div class="log-content">
+            <div 
+                *ngFor="let log of uploadLog" 
+                class="log-entry"
+                [ngClass]="log.type">
+                <span class="log-time">{{log.time | date:'HH:mm:ss'}}</span>
+                <span class="log-message">{{log.message}}</span>
+            </div>
+            </div>
+        </details>
+        </div>
+    </div>
+
+    <!-- 上传结果 -->
+    <div class="upload-result" *ngIf="uploadResult">
+        <div class="result-card" [ngClass]="uploadResult.success ? 'success' : 'error'">
+        <div class="result-icon">
+            {{uploadResult.success ? '🎉' : '❌'}}
+        </div>
+        <div class="result-content">
+            <h3>{{uploadResult.success ? '上传成功！' : '上传失败'}}</h3>
+            <p>{{uploadResult.message}}</p>
+            
+            <div class="result-details" *ngIf="uploadResult.success">
+            <p><strong>已上传文件:</strong> {{uploadResult.filesUploaded}} 个</p>
+            <p><strong>GitHub提交:</strong> {{uploadResult.commitSha}}</p>
+            <p><strong>部署状态:</strong> GitHub Actions将在1-2分钟内自动部署</p>
+            </div>
+
+            <div class="result-actions">
+            <button 
+                *ngIf="uploadResult.success"
+                (click)="viewPapers()"
+                class="btn btn-primary">
+                查看论文列表
+            </button>
+            <button 
+                (click)="resetUpload()"
+                class="btn btn-secondary">
+                {{uploadResult.success ? '上传更多' : '重新尝试'}}
+            </button>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- 帮助信息 -->
+    <div class="help-section" *ngIf="isConfigured && !showConfigForm">
+    <details>
+        <summary>💡 上传提示</summary>
+        <div class="help-content">
+        <h4>📋 准备工作</h4>
+        <ul>
+            <li>确保PDF文件大小不超过25MB</li>
+            <li>准备完整的论文信息（标题、作者、分类等）</li>
+            <li>检查GitHub Token权限是否正确</li>
+        </ul>
+
+        <h4>🚀 上传流程</h4>
+        <ol>
+            <li>选择或拖拽PDF文件到上传区域</li>
+            <li>填写论文的基本信息</li>
+            <li>点击"开始上传"按钮</li>
+            <li>等待上传完成和自动部署</li>
+        </ol>
+
+        <h4>📁 文件组织</h4>
+        <p>文件将按以下结构存储：</p>
+        <code>papers/年份/分类/文件名.pdf</code>
+        <p>例如：<code>papers/2024/人工智能/deep_learning_paper.pdf</code></p>
+
+        <h4>⚡ 自动化功能</h4>
+        <ul>
+            <li>自动更新 papers.json 数据文件</li>
+            <li>自动触发 GitHub Actions 部署</li>
+            <li>自动生成唯一文件ID</li>
+            <li>自动统计分类数量</li>
+        </ul>
+        </div>
+    </details>
+    </div>
+</div>

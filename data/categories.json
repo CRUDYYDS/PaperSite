@@ -1,0 +1,28 @@
+{
+  "categories": [
+    {
+      "id": "ai",
+      "name": "人工智能",
+      "description": "人工智能相关研究论文",
+      "paperCount": 1
+    },
+    {
+      "id": "ml",
+      "name": "机器学习", 
+      "description": "机器学习算法与应用",
+      "paperCount": 0
+    },
+    {
+      "id": "cs",
+      "name": "计算机科学",
+      "description": "计算机科学基础理论",
+      "paperCount": 0
+    },
+    {
+      "id": "math",
+      "name": "数学",
+      "description": "数学理论与应用",
+      "paperCount": 0
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+<div class="paper-list-container">
+    <div class="header">
+    <h1>📚 论文列表</h1>
+    <div class="filters">
+        <select [(ngModel)]="selectedCategory" (change)="applyFilters()">
+        <option value="">全部分类</option>
+        <option *ngFor="let cat of categories" [value]="cat.name">{{cat.name}}</option>
+        </select>
+        <select [(ngModel)]="sortBy" (change)="applyFilters()">
+        <option value="date">按时间排序</option>
+        <option value="title">按标题排序</option>
+        </select>
+    </div>
+    </div>
+    
+    <div class="papers-list" *ngIf="!loading">
+    <app-paper-card *ngFor="let paper of papers" [paper]="paper"></app-paper-card>
+    </div>
+    
+    <div class="loading" *ngIf="loading">加载中...</div>
+    
+    <app-pagination 
+    *ngIf="totalPapers > pageSize"
+    [totalItems]="totalPapers" 
+    [pageSize]="pageSize"
+    [currentPage]="currentPage"
+    (pageChange)="onPageChange($event)">
+    </app-pagination>
+</div>

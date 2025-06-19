@@ -1,0 +1,76 @@
+# 1. .github/workflows/deploy.yml (GitHub Actions 工作流配置)
+name: Deploy Angular App to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  # 允许手动触发
+  workflow_dispatch:
+
+# 设置权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 并发控制
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # 构建作业
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # 1. 检出代码
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v4
+      
+    # 2. 设置 Node.js 环境
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    # 3. 安装依赖
+    - name: 📦 Install Dependencies
+      run: npm ci
+    
+    # 4. 运行测试（可选）
+    - name: 🧪 Run Tests
+      run: npm run test -- --watch=false --browsers=ChromeHeadless
+      continue-on-error: true  # 测试失败不阻止部署
+    
+    # 5. 构建生产版本
+    - name: 🏗️ Build for Production
+      run: npm run build:prod
+      
+    # 6. 创建 404.html（SPA路由支持）
+    - name: 📄 Create 404.html for SPA routing
+      run: cp dist/index.html dist/404.html
+      
+    # 7. 上传构建产物
+    - name: ⬆️ Upload Build Artifacts
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: dist/
+
+  # 部署作业
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    # 只在 main 分支推送时部署
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: 🚀 Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4

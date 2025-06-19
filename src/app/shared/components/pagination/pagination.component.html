@@ -1,0 +1,55 @@
+<div class="pagination-container" *ngIf="totalPages > 1">
+    <div class="pagination-info">
+    显示第 {{startItem}} - {{endItem}} 项，共 {{totalItems}} 项
+    </div>
+    
+    <div class="pagination-controls">
+    <button 
+        class="page-btn"
+        [disabled]="currentPage === 1"
+        (click)="goToPage(1)">
+        首页
+    </button>
+    
+    <button 
+        class="page-btn"
+        [disabled]="currentPage === 1"
+        (click)="goToPage(currentPage - 1)">
+        上一页
+    </button>
+    
+    <div class="page-numbers">
+        <button 
+        *ngFor="let page of visiblePages"
+        class="page-btn"
+        [class.active]="page === currentPage"
+        (click)="goToPage(page)">
+        {{page}}
+        </button>
+    </div>
+    
+    <button 
+        class="page-btn"
+        [disabled]="currentPage === totalPages"
+        (click)="goToPage(currentPage + 1)">
+        下一页
+    </button>
+    
+    <button 
+        class="page-btn"
+        [disabled]="currentPage === totalPages"
+        (click)="goToPage(totalPages)">
+        末页
+    </button>
+    </div>
+    
+    <div class="page-size-selector">
+    <label>每页显示：</label>
+    <select [value]="pageSize" (change)="onPageSizeChange($event)">
+        <option [value]="10">10</option>
+        <option [value]="20">20</option>
+        <option [value]="50">50</option>
+        <option [value]="100">100</option>
+    </select>
+    </div>
+</div>
