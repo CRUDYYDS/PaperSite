@@ -97,11 +97,33 @@
 
   <!-- PDF预览视图 -->
   <div class="pdf-preview-section" [class.hidden]="currentView !== 'preview'">
-    <div class="preview-container">
+    <div class="preview-container" *ngIf="isPdfAccessible()">
       <app-pdf-viewer 
         [pdfUrl]="getPdfUrl()"
         [showToolbar]="true">
       </app-pdf-viewer>
+    </div>
+    
+    <!-- PDF不可用提示 -->
+    <div class="pdf-not-available" *ngIf="!isPdfAccessible()">
+      <div class="notice">
+        <div class="notice-icon">📄</div>
+        <h3>PDF预览暂不可用</h3>
+        <p>PDF文件暂时无法预览，这可能是因为：</p>
+        <ul>
+          <li>文件正在上传中</li>
+          <li>文件路径配置需要更新</li>
+          <li>文件存储在外部位置</li>
+        </ul>
+        <div class="notice-actions">
+          <button (click)="downloadPaper()" class="btn btn-primary">
+            📥 尝试下载
+          </button>
+          <button (click)="switchView('info')" class="btn btn-secondary">
+            📋 查看详情
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

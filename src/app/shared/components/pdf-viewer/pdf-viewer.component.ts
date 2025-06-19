@@ -1,5 +1,5 @@
 // src/app/shared/components/pdf-viewer/pdf-viewer.component.ts
-import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 
 declare var pdfjsLib: any;
 
@@ -39,6 +39,8 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
     { label: '适合页面', value: 'fit-page' }
   ];
 
+  constructor(private cdr: ChangeDetectorRef) {}
+
   ngOnInit() {
     // 配置PDF.js worker
     if (typeof pdfjsLib !== 'undefined') {
@@ -47,9 +49,12 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (this.pdfUrl) {
-      this.loadPDF();
-    }
+    // 使用setTimeout避免ExpressionChangedAfterItHasBeenCheckedError
+    setTimeout(() => {
+      if (this.pdfUrl) {
+        this.loadPDF();
+      }
+    }, 0);
   }
 
   ngOnDestroy() {
@@ -88,10 +93,14 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
       
       await this.renderPage();
       this.isLoading = false;
+      // 手动触发变更检测
+      this.cdr.detectChanges();
     } catch (error: any) {
       console.error('PDF加载失败:', error);
       this.error = this.getErrorMessage(error);
       this.isLoading = false;
+      // 手动触发变更检测
+      this.cdr.detectChanges();
     }
   }
 

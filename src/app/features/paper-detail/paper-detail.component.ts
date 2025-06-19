@@ -73,8 +73,17 @@ export class PaperDetailComponent implements OnInit {
       return this.paper.fileUrl;
     }
     
-    // 否则根据环境构建URL
-    return EnvironmentUtil.getPaperPath(this.paper.filePath);
+    // 根据环境构建URL
+    if (EnvironmentUtil.isGitHubPagesMode()) {
+      // GitHub Pages 模式：使用完整的GitHub Pages URL
+      const baseHref = EnvironmentUtil.getBaseHref().replace(/\/$/, '');
+      return `${baseHref}/${this.paper.filePath}`;
+    } else {
+      // 开发模式：使用相对路径，但需要确保路径正确
+      // 移除 papers/ 前缀，因为它应该在 assets 或 data 目录下
+      const fileName = this.paper.filePath.split('/').pop() || this.paper.fileName;
+      return `/assets/papers/${fileName}`;
+    }
   }
 
   downloadPaper() {
@@ -162,6 +171,15 @@ export class PaperDetailComponent implements OnInit {
   // 检查PDF是否可用
   isPdfAvailable(): boolean {
     return !!(this.paper && (this.paper.fileUrl || this.paper.filePath));
+  }
+
+  // 检查PDF是否可访问
+  isPdfAccessible(): boolean {
+    if (!this.paper) return false;
+    
+    const url = this.getPdfUrl();
+    // 检查是否为有效的URL或本地assets路径
+    return url.startsWith('http') || url.startsWith('/assets') || url.includes('assets/');
   }
 
   // 获取论文作者字符串
