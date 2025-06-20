@@ -72,49 +72,34 @@ export class PaperDetailComponent implements OnInit {
     console.log('Paper ID:', this.paper.id);
     console.log('fileUrl from data:', this.paper.fileUrl);
     console.log('filePath from data:', this.paper.filePath);
-    
-    // 硬编码测试URL，直接绕过数据文件的问题
-    if (this.paper.id === 'test001') {
-      const testUrl = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf';
-      console.log('Using hardcoded test URL:', testUrl);
-      return testUrl;
-    }
-    
-    if (this.paper.id === 'mc3meiuvlzhop') {
-      const bertUrl = 'https://arxiv.org/pdf/1810.04805.pdf';
-      console.log('Using hardcoded BERT URL:', bertUrl);
-      return bertUrl;
-    }
-    
-    // 检查是否为完整的HTTP URL
-    if (this.paper.fileUrl && this.paper.fileUrl.startsWith('http')) {
-      console.log('Using HTTP fileUrl:', this.paper.fileUrl);
-      return this.paper.fileUrl;
-    }
+    console.log('GitHub Pages Mode:', EnvironmentUtil.isGitHubPagesMode());
+    console.log('Base Href:', EnvironmentUtil.getBaseHref());
     
     // 处理本地文件路径
     if (this.paper.filePath) {
       // 如果在GitHub Pages模式下
       if (EnvironmentUtil.isGitHubPagesMode()) {
-        // 检查filePath是否已经被转换，如果是，直接使用原始路径
+        // 检查filePath格式，构建正确的URL
         if (this.paper.filePath.startsWith('papers/')) {
+          // 直接使用根路径，因为papers目录应该在网站根目录
           const url = `/${this.paper.filePath}`;
-          console.log('Using original papers path:', url);
+          console.log('Using GitHub Pages papers path:', url);
           return url;
         } else {
+          // 使用baseHref构建完整路径
           const baseHref = EnvironmentUtil.getBaseHref().replace(/\/$/, '');
           const url = `${baseHref}/${this.paper.filePath}`;
-          console.log('Using GitHub Pages URL:', url);
+          console.log('Using GitHub Pages URL with baseHref:', url);
           return url;
         }
       } else {
-        // 开发模式：检查不同的路径格式
+        // 开发模式：根据filePath构建本地URL
         if (this.paper.filePath.startsWith('assets/')) {
           const url = `/${this.paper.filePath}`;
           console.log('Using assets path:', url);
           return url;
         } else if (this.paper.filePath.startsWith('papers/')) {
-          // 直接使用papers路径（如果已配置在angular.json中）
+          // 直接使用papers路径（需要在angular.json中配置）
           const url = `/${this.paper.filePath}`;
           console.log('Using papers path:', url);
           return url;
@@ -127,10 +112,15 @@ export class PaperDetailComponent implements OnInit {
       }
     }
     
-    // 其他情况返回一个默认的测试PDF
-    const fallbackUrl = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf';
-    console.log('Using fallback URL:', fallbackUrl);
-    return fallbackUrl;
+    // 如果filePath不可用，检查fileUrl
+    if (this.paper.fileUrl && this.paper.fileUrl.startsWith('http')) {
+      console.log('Using HTTP fileUrl:', this.paper.fileUrl);
+      return this.paper.fileUrl;
+    }
+    
+    // 最后的降级方案
+    console.log('No valid path found, using fallback');
+    return '';
   }
 
   downloadPaper() {
