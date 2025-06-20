@@ -16,9 +16,9 @@ export class PaperDetailComponent implements OnInit {
   error: string | null = null;
   isLoading = false;
   
-  // 缓存PDF URL避免重复计算
-  private cachedPdfUrl: string = '';
-  private lastPaperId: string = '';
+  // 预计算的PDF URL，避免在模板中调用方法
+  pdfUrl: string = '';
+  isPdfReady: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,12 +44,113 @@ export class PaperDetailComponent implements OnInit {
       
       if (!this.paper) {
         this.error = '论文不存在或已被删除';
+      } else {
+        // 论文加载成功后，计算PDF URL
+        this.calculatePdfUrl();
       }
     } catch (error: any) {
       console.error('加载论文详情失败:', error);
       this.error = error.message || '加载论文详情时发生错误';
     } finally {
       this.isLoading = false;
+    }
+  }
+
+  // 计算PDF URL的私有方法，只调用一次
+  private calculatePdfUrl() {
+    if (!this.paper) {
+      this.pdfUrl = '';
+      this.isPdfReady = false;
+      return;
+    }
+
+    console.log('=== PDF URL Debug ===');
+    console.log('Paper ID:', this.paper.id);
+    console.log('fileUrl from data:', this.paper.fileUrl);
+    console.log('filePath from data:', this.paper.filePath);
+    console.log('GitHub Pages Mode:', EnvironmentUtil.isGitHubPagesMode());
+    console.log('Base Href:', EnvironmentUtil.getBaseHref());
+    console.log('Current window.location:', window.location.href);
+    console.log('Current window.origin:', window.location.origin);
+    
+    // 处理本地文件路径
+    if (this.paper.filePath) {
+      // 如果在GitHub Pages模式下
+      if (EnvironmentUtil.isGitHubPagesMode()) {
+        const baseHref = EnvironmentUtil.getBaseHref().replace(/\/$/, '');
+        
+        if (this.paper.filePath.startsWith('papers/')) {
+          const relativePath = `${baseHref}/${this.paper.filePath}`;
+          const absoluteUrl = `${window.location.origin}${relativePath}`;
+          
+          console.log('Using GitHub Pages papers path with baseHref:', relativePath);
+          console.log('🌍 COMPLETE URL WITH DOMAIN:', absoluteUrl);
+          
+          this.pdfUrl = relativePath;
+        } else {
+          const relativePath = `${baseHref}/${this.paper.filePath}`;
+          const absoluteUrl = `${window.location.origin}${relativePath}`;
+          
+          console.log('Using GitHub Pages URL with baseHref:', relativePath);
+          console.log('🌍 COMPLETE URL WITH DOMAIN:', absoluteUrl);
+          
+          this.pdfUrl = relativePath;
+        }
+      } else {
+        // 开发模式
+        if (this.paper.filePath.startsWith('assets/')) {
+          this.pdfUrl = `/${this.paper.filePath}`;
+        } else if (this.paper.filePath.startsWith('papers/')) {
+          this.pdfUrl = `/${this.paper.filePath}`;
+        } else {
+          this.pdfUrl = `/assets/papers/${this.paper.fileName}`;
+        }
+      }
+    }
+    
+    // 如果没有filePath，检查fileUrl
+    if (!this.pdfUrl && this.paper.fileUrl && this.paper.fileUrl.startsWith('http')) {
+      this.pdfUrl = this.paper.fileUrl;
+    }
+    
+    // 检查PDF是否可访问
+    this.isPdfReady = !!(this.pdfUrl && (
+      this.pdfUrl.startsWith('http') || 
+      this.pdfUrl.startsWith('/assets') || 
+      this.pdfUrl.startsWith('assets/') ||
+      this.pdfUrl.startsWith('/PaperSite/') ||
+      this.pdfUrl.includes('/papers/')
+    ));
+
+    console.log('Final PDF URL:', this.pdfUrl);
+    console.log('PDF Ready:', this.isPdfReady);
+    
+    // 测试PDF访问性
+    if (this.isPdfReady) {
+      this.testPdfAccess();
+    }
+  }
+
+  // 测试PDF访问性
+  private async testPdfAccess() {
+    const fullUrl = this.pdfUrl.startsWith('http') ? this.pdfUrl : `${window.location.origin}${this.pdfUrl}`;
+    
+    try {
+      console.log('🔍 Testing actual PDF access:', fullUrl);
+      const response = await fetch(fullUrl, { 
+        method: 'HEAD',
+        mode: 'cors',
+        cache: 'no-cache'
+      });
+      
+      console.log('✅ PDF access test result:', {
+        status: response.status,
+        statusText: response.statusText,
+        accessible: response.ok
+      });
+      
+    } catch (error) {
+      console.error('❌ PDF access test failed:', error);
     }
   }
 
@@ -69,119 +170,13 @@ export class PaperDetailComponent implements OnInit {
     }
   }
 
-  getPdfUrl(): string {
-    if (!this.paper) return '';
-    
-    // 避免重复计算，使用缓存
-    if (this.paper.id === this.lastPaperId && this.cachedPdfUrl) {
-      return this.cachedPdfUrl;
-    }
-    
-    // 只在第一次或paper改变时执行调试输出
-    if (this.paper.id !== this.lastPaperId) {
-      console.log('=== PDF URL Debug ===');
-      console.log('Paper ID:', this.paper.id);
-      console.log('fileUrl from data:', this.paper.fileUrl);
-      console.log('filePath from data:', this.paper.filePath);
-      console.log('GitHub Pages Mode:', EnvironmentUtil.isGitHubPagesMode());
-      console.log('Base Href:', EnvironmentUtil.getBaseHref());
-      console.log('Current window.location:', window.location.href);
-      console.log('Current window.origin:', window.location.origin);
-    }
-    
-    let resultUrl = '';
-    
-    // 处理本地文件路径
-    if (this.paper.filePath) {
-      // 如果在GitHub Pages模式下
-      if (EnvironmentUtil.isGitHubPagesMode()) {
-        const baseHref = EnvironmentUtil.getBaseHref().replace(/\/$/, ''); // 移除末尾斜杠
-        
-        // 检查filePath格式，构建正确的URL
-        if (this.paper.filePath.startsWith('papers/')) {
-          // 使用baseHref + filePath构建完整的GitHub Pages URL
-          const relativePath = `${baseHref}/${this.paper.filePath}`;
-          const absoluteUrl = `${window.location.origin}${relativePath}`;
-          
-          if (this.paper.id !== this.lastPaperId) {
-            console.log('Using GitHub Pages papers path with baseHref:', relativePath);
-            console.log('🌍 COMPLETE URL WITH DOMAIN:', absoluteUrl);
-          }
-          
-          resultUrl = relativePath;
-        } else {
-          // 其他格式也使用baseHref
-          const relativePath = `${baseHref}/${this.paper.filePath}`;
-          const absoluteUrl = `${window.location.origin}${relativePath}`;
-          
-          if (this.paper.id !== this.lastPaperId) {
-            console.log('Using GitHub Pages URL with baseHref:', relativePath);
-            console.log('🌍 COMPLETE URL WITH DOMAIN:', absoluteUrl);
-          }
-          
-          resultUrl = relativePath;
-        }
-      } else {
-        // 开发模式：根据filePath构建本地URL
-        if (this.paper.filePath.startsWith('assets/')) {
-          const relativePath = `/${this.paper.filePath}`;
-          const absoluteUrl = `${window.location.origin}${relativePath}`;
-          
-          if (this.paper.id !== this.lastPaperId) {
-            console.log('Using assets path:', relativePath);
-            console.log('🌍 COMPLETE URL WITH DOMAIN:', absoluteUrl);
-          }
-          
-          resultUrl = relativePath;
-        } else if (this.paper.filePath.startsWith('papers/')) {
-          // 直接使用papers路径（需要在angular.json中配置）
-          const relativePath = `/${this.paper.filePath}`;
-          const absoluteUrl = `${window.location.origin}${relativePath}`;
-          
-          if (this.paper.id !== this.lastPaperId) {
-            console.log('Using papers path:', relativePath);
-            console.log('🌍 COMPLETE URL WITH DOMAIN:', absoluteUrl);
-          }
-          
-          resultUrl = relativePath;
-        } else {
-          // 默认假设在assets目录下
-          const relativePath = `/assets/papers/${this.paper.fileName}`;
-          const absoluteUrl = `${window.location.origin}${relativePath}`;
-          
-          if (this.paper.id !== this.lastPaperId) {
-            console.log('Using default assets path:', relativePath);
-            console.log('🌍 COMPLETE URL WITH DOMAIN:', absoluteUrl);
-          }
-          
-          resultUrl = relativePath;
-        }
-      }
-    }
-    
-    // 如果filePath不可用，检查fileUrl
-    if (!resultUrl && this.paper.fileUrl && this.paper.fileUrl.startsWith('http')) {
-      if (this.paper.id !== this.lastPaperId) {
-        console.log('Using HTTP fileUrl:', this.paper.fileUrl);
-        console.log('🌍 COMPLETE URL WITH DOMAIN:', this.paper.fileUrl);
-      }
-      resultUrl = this.paper.fileUrl;
-    }
-    
-    // 缓存结果
-    this.cachedPdfUrl = resultUrl;
-    this.lastPaperId = this.paper.id;
-    
-    return resultUrl;
-  }
-
   downloadPaper() {
     if (this.paper) {
       // 增加下载计数
       this.paperService.incrementDownloadCount(this.paper.id);
       
-      // 获取下载URL
-      const downloadUrl = this.getPdfUrl();
+      // 获取下载URL - 使用预计算的pdfUrl
+      const downloadUrl = this.pdfUrl || this.paper.fileUrl || this.paper.filePath;
       
       // 创建下载链接
       const link = document.createElement('a');
@@ -212,157 +207,5 @@ export class PaperDetailComponent implements OnInit {
   private trackPaperView() {
     // 记录论文查看次数（如果需要的话）
     console.log(`论文查看: ${this.paper?.title}`);
-    
-    // 这里可以调用服务记录查看统计
-    // this.analyticsService.trackPaperView(this.paper.id);
-  }
-
-  // 分享论文
-  sharePaper() {
-    if (this.paper) {
-      const shareData = {
-        title: this.paper.title,
-        text: `查看论文: ${this.paper.title}`,
-        url: window.location.href
-      };
-
-      if (navigator.share) {
-        // 使用原生分享API
-        navigator.share(shareData).catch(console.error);
-      } else {
-        // 降级到复制链接
-        this.copyPaperLink();
-      }
-    }
-  }
-
-  // 复制论文链接
-  copyPaperLink() {
-    const url = window.location.href;
-    
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(url).then(() => {
-        // 可以显示一个提示消息
-        console.log('链接已复制到剪贴板');
-      }).catch(console.error);
-    } else {
-      // 降级方案
-      const textArea = document.createElement('textarea');
-      textArea.value = url;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-      console.log('链接已复制到剪贴板');
-    }
-  }
-
-  // 检查PDF是否可用
-  isPdfAvailable(): boolean {
-    return !!(this.paper && (this.paper.fileUrl || this.paper.filePath));
-  }
-
-  // 检查PDF是否可访问
-  isPdfAccessible(): boolean {
-    if (!this.paper) return false;
-    
-    const url = this.getPdfUrl();
-    const fullUrl = url.startsWith('http') ? url : `${window.location.origin}${url}`;
-    
-    // 只在第一次访问时进行测试和调试输出
-    if (this.paper.id !== this.lastPaperId) {
-      console.log('Checking PDF accessibility for URL:', url);
-      console.log('🌍 Full URL for testing:', fullUrl);
-      
-      // 异步测试文件是否真的可访问
-      this.testPdfAccess(fullUrl);
-    }
-    
-    // 检查是否为有效的URL
-    const isAccessible = url.startsWith('http') || 
-                        url.startsWith('/assets') || 
-                        url.startsWith('assets/') ||
-                        url.startsWith('/PaperSite/') ||
-                        url.includes('/papers/');
-    
-    if (this.paper.id !== this.lastPaperId) {
-      console.log('PDF accessible (by pattern):', isAccessible);
-    }
-    
-    return isAccessible;
-  }
-
-  // 异步测试PDF文件是否真的可访问
-  private async testPdfAccess(url: string) {
-    try {
-      console.log('🔍 Testing actual PDF access:', url);
-      
-      // 使用fetch进行HEAD请求测试
-      const response = await fetch(url, { 
-        method: 'HEAD',
-        mode: 'cors',
-        cache: 'no-cache'
-      });
-      
-      console.log('✅ PDF access test result:', {
-        status: response.status,
-        statusText: response.statusText,
-        accessible: response.ok,
-        headers: {
-          'content-type': response.headers.get('content-type'),
-          'content-length': response.headers.get('content-length')
-        }
-      });
-      
-      if (!response.ok) {
-        console.warn('❌ PDF file is not accessible:', response.status, response.statusText);
-      } else {
-        console.log('✅ PDF file is accessible and ready for viewing!');
-      }
-      
-    } catch (error) {
-      console.error('❌ PDF access test failed:', error);
-      
-      // 如果HEAD请求失败，尝试GET请求（某些服务器不支持HEAD）
-      try {
-        console.log('🔄 Retrying with GET request...');
-        const getResponse = await fetch(url, {
-          method: 'GET',
-          mode: 'cors',
-          cache: 'no-cache'
-        });
-        
-        console.log('✅ PDF access test (GET) result:', {
-          status: getResponse.status,
-          statusText: getResponse.statusText,
-          accessible: getResponse.ok
-        });
-        
-      } catch (getError) {
-        console.error('❌ PDF access test (GET) also failed:', getError);
-      }
-    }
-  }
-
-  // 获取论文作者字符串
-  getAuthorsString(): string {
-    if (!this.paper || !this.paper.authors.length) return '';
-    
-    if (this.paper.authors.length <= 3) {
-      return this.paper.authors.join(', ');
-    }
-    
-    return `${this.paper.authors.slice(0, 2).join(', ')} 等 ${this.paper.authors.length} 人`;
-  }
-
-  // 格式化文件大小
-  formatFileSize(bytes: number): string {
-    if (bytes === 0) return '0 Bytes';
-    
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 }

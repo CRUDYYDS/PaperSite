@@ -97,15 +97,15 @@
 
   <!-- PDF预览视图 -->
   <div class="pdf-preview-section" [class.hidden]="currentView !== 'preview'">
-    <div class="preview-container" *ngIf="isPdfAccessible()">
+    <div class="preview-container" *ngIf="isPdfReady">
       <app-pdf-viewer 
-        [pdfUrl]="getPdfUrl()"
+        [pdfUrl]="pdfUrl"
         [showToolbar]="true">
       </app-pdf-viewer>
     </div>
     
     <!-- PDF不可用提示 -->
-    <div class="pdf-not-available" *ngIf="!isPdfAccessible()">
+    <div class="pdf-not-available" *ngIf="!isPdfReady">
       <div class="notice">
         <div class="notice-icon">📄</div>
         <h3>PDF预览暂不可用</h3>
