@@ -48,13 +48,32 @@
       "fileUrl": "https://arxiv.org/pdf/1810.04805.pdf",
       "downloadCount": 0,
       "createdAt": "2025-06-19T16:53:45.848Z"
+    },
+    {
+      "id": "mc3ofdjm3wqff",
+      "title": "Lattice LSTM",
+      "authors": [
+        "Singapore University of Technology and Design"
+      ],
+      "abstract": "We investigate a lattice-structured LSTM\nmodel for Chinese NER, which encodes\na sequence of input characters as well as\nall potential words that match a lexicon.\nCompared with character-based methods,\nour model explicitly leverages word and\nword sequence information. Compared\nwith word-based methods, lattice LSTM\ndoes not suffer from segmentation errors.\nGated recurrent cells allow our model to\nchoose the most relevant characters and\nwords from a sentence for better NER results. Experiments on various datasets\nshow that lattice LSTM outperforms both\nword-based and character-based LSTM\nbaselines, achieving the best results.",
+      "keywords": [
+        "LSTM"
+      ],
+      "category": "人工智能",
+      "publishDate": "2025-06-19",
+      "fileName": "Lattice LSTM.pdf",
+      "fileSize": 557500,
+      "repository": "master",
+      "filePath": "papers/2025/ai/1750355421979_lattice_lstm.pdf",
+      "downloadCount": 0,
+      "createdAt": "2025-06-19T17:50:24.850Z"
     }
   ],
   "metadata": {
-    "totalCount": 2,
-    "lastUpdated": "2025-06-19T16:53:46.224Z",
+    "totalCount": 3,
+    "lastUpdated": "2025-06-19T17:50:25.266Z",
     "categories": {
-      "人工智能": 2
+      "人工智能": 3
     }
   }
 }
