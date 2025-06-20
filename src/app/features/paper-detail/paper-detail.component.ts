@@ -74,6 +74,8 @@ export class PaperDetailComponent implements OnInit {
     console.log('filePath from data:', this.paper.filePath);
     console.log('GitHub Pages Mode:', EnvironmentUtil.isGitHubPagesMode());
     console.log('Base Href:', EnvironmentUtil.getBaseHref());
+    console.log('Current window.location:', window.location.href);
+    console.log('Current window.origin:', window.location.origin);
     
     // 处理本地文件路径
     if (this.paper.filePath) {
@@ -84,31 +86,51 @@ export class PaperDetailComponent implements OnInit {
         // 检查filePath格式，构建正确的URL
         if (this.paper.filePath.startsWith('papers/')) {
           // 使用baseHref + filePath构建完整的GitHub Pages URL
-          const url = `${baseHref}/${this.paper.filePath}`;
-          console.log('Using GitHub Pages papers path with baseHref:', url);
-          return url;
+          const relativePath = `${baseHref}/${this.paper.filePath}`;
+          const absoluteUrl = `${window.location.origin}${relativePath}`;
+          
+          console.log('Using GitHub Pages papers path with baseHref:', relativePath);
+          console.log('🌍 COMPLETE URL WITH DOMAIN:', absoluteUrl);
+          
+          return relativePath;
         } else {
           // 其他格式也使用baseHref
-          const url = `${baseHref}/${this.paper.filePath}`;
-          console.log('Using GitHub Pages URL with baseHref:', url);
-          return url;
+          const relativePath = `${baseHref}/${this.paper.filePath}`;
+          const absoluteUrl = `${window.location.origin}${relativePath}`;
+          
+          console.log('Using GitHub Pages URL with baseHref:', relativePath);
+          console.log('🌍 COMPLETE URL WITH DOMAIN:', absoluteUrl);
+          
+          return relativePath;
         }
       } else {
         // 开发模式：根据filePath构建本地URL
         if (this.paper.filePath.startsWith('assets/')) {
-          const url = `/${this.paper.filePath}`;
-          console.log('Using assets path:', url);
-          return url;
+          const relativePath = `/${this.paper.filePath}`;
+          const absoluteUrl = `${window.location.origin}${relativePath}`;
+          
+          console.log('Using assets path:', relativePath);
+          console.log('🌍 COMPLETE URL WITH DOMAIN:', absoluteUrl);
+          
+          return relativePath;
         } else if (this.paper.filePath.startsWith('papers/')) {
           // 直接使用papers路径（需要在angular.json中配置）
-          const url = `/${this.paper.filePath}`;
-          console.log('Using papers path:', url);
-          return url;
+          const relativePath = `/${this.paper.filePath}`;
+          const absoluteUrl = `${window.location.origin}${relativePath}`;
+          
+          console.log('Using papers path:', relativePath);
+          console.log('🌍 COMPLETE URL WITH DOMAIN:', absoluteUrl);
+          
+          return relativePath;
         } else {
           // 默认假设在assets目录下
-          const url = `/assets/papers/${this.paper.fileName}`;
-          console.log('Using default assets path:', url);
-          return url;
+          const relativePath = `/assets/papers/${this.paper.fileName}`;
+          const absoluteUrl = `${window.location.origin}${relativePath}`;
+          
+          console.log('Using default assets path:', relativePath);
+          console.log('🌍 COMPLETE URL WITH DOMAIN:', absoluteUrl);
+          
+          return relativePath;
         }
       }
     }
@@ -116,6 +138,7 @@ export class PaperDetailComponent implements OnInit {
     // 如果filePath不可用，检查fileUrl
     if (this.paper.fileUrl && this.paper.fileUrl.startsWith('http')) {
       console.log('Using HTTP fileUrl:', this.paper.fileUrl);
+      console.log('🌍 COMPLETE URL WITH DOMAIN:', this.paper.fileUrl);
       return this.paper.fileUrl;
     }
     
@@ -216,7 +239,13 @@ export class PaperDetailComponent implements OnInit {
     if (!this.paper) return false;
     
     const url = this.getPdfUrl();
+    const fullUrl = url.startsWith('http') ? url : `${window.location.origin}${url}`;
+    
     console.log('Checking PDF accessibility for URL:', url);
+    console.log('🌍 Full URL for testing:', fullUrl);
+    
+    // 异步测试文件是否真的可访问
+    this.testPdfAccess(fullUrl);
     
     // 检查是否为有效的URL
     const isAccessible = url.startsWith('http') || 
@@ -225,9 +254,28 @@ export class PaperDetailComponent implements OnInit {
                         url.startsWith('/PaperSite/') ||
                         url.includes('/papers/');
     
-    console.log('PDF accessible:', isAccessible);
+    console.log('PDF accessible (by pattern):', isAccessible);
     
     return isAccessible;
+  }
+
+  // 异步测试PDF文件是否真的可访问
+  private async testPdfAccess(url: string) {
+    try {
+      console.log('🔍 Testing actual PDF access:', url);
+      const response = await fetch(url, { method: 'HEAD' });
+      console.log('✅ PDF access test result:', {
+        status: response.status,
+        statusText: response.statusText,
+        accessible: response.ok
+      });
+      
+      if (!response.ok) {
+        console.warn('❌ PDF file is not accessible:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('❌ PDF access test failed:', error);
+    }
   }
 
   // 获取论文作者字符串
