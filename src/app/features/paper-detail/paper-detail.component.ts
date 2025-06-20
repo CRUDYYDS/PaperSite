@@ -68,8 +68,11 @@ export class PaperDetailComponent implements OnInit {
   getPdfUrl(): string {
     if (!this.paper) return '';
     
-    // 如果已经有完整的URL，直接使用
-    if (this.paper.fileUrl) {
+    console.log('Paper data:', this.paper); // 调试用
+    
+    // 优先使用 fileUrl
+    if (this.paper.fileUrl && this.paper.fileUrl !== '') {
+      console.log('Using fileUrl:', this.paper.fileUrl);
       return this.paper.fileUrl;
     }
     
@@ -77,12 +80,27 @@ export class PaperDetailComponent implements OnInit {
     if (EnvironmentUtil.isGitHubPagesMode()) {
       // GitHub Pages 模式：使用完整的GitHub Pages URL
       const baseHref = EnvironmentUtil.getBaseHref().replace(/\/$/, '');
-      return `${baseHref}/${this.paper.filePath}`;
+      const url = `${baseHref}/${this.paper.filePath}`;
+      console.log('Using GitHub Pages URL:', url);
+      return url;
     } else {
-      // 开发模式：使用相对路径，但需要确保路径正确
-      // 移除 papers/ 前缀，因为它应该在 assets 或 data 目录下
-      const fileName = this.paper.filePath.split('/').pop() || this.paper.fileName;
-      return `/assets/papers/${fileName}`;
+      // 开发模式：所有静态文件都必须在assets目录下
+      // 检查文件路径并构建正确的assets路径
+      if (this.paper.filePath.startsWith('assets/')) {
+        const url = `/${this.paper.filePath}`;
+        console.log('Using assets path:', url);
+        return url;
+      } else if (this.paper.filePath.startsWith('papers/')) {
+        // 将papers路径映射到assets下
+        const url = `/assets/${this.paper.filePath}`;
+        console.log('Using mapped assets path:', url);
+        return url;
+      } else {
+        // 默认假设在assets目录下
+        const url = `/assets/papers/${this.paper.fileName}`;
+        console.log('Using default assets path:', url);
+        return url;
+      }
     }
   }
 
@@ -178,8 +196,10 @@ export class PaperDetailComponent implements OnInit {
     if (!this.paper) return false;
     
     const url = this.getPdfUrl();
-    // 检查是否为有效的URL或本地assets路径
-    return url.startsWith('http') || url.startsWith('/assets') || url.includes('assets/');
+    console.log('PDF URL:', url); // 调试用
+    
+    // 检查是否为有效的URL
+    return url.startsWith('http') || url.startsWith('/assets') || url.startsWith('assets/');
   }
 
   // 获取论文作者字符串
