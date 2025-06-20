@@ -49,12 +49,13 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // 使用setTimeout避免ExpressionChangedAfterItHasBeenCheckedError
+    // 使用setTimeout确保视图完全初始化
     setTimeout(() => {
       if (this.pdfUrl) {
+        console.log('🎯 PDF viewer initialized, starting PDF load...');
         this.loadPDF();
       }
-    }, 0);
+    }, 100);
   }
 
   ngOnDestroy() {
@@ -172,7 +173,14 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async renderPage() {
-    if (!this.pdfDoc || this.isRendering) return;
+    if (!this.pdfDoc || this.isRendering || !this.pdfCanvas) return;
+
+    // 确保canvas元素已经可用
+    if (!this.pdfCanvas.nativeElement) {
+      console.warn('Canvas element not ready, retrying in 100ms...');
+      setTimeout(() => this.renderPage(), 100);
+      return;
+    }
 
     this.isRendering = true;
 
@@ -180,6 +188,12 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
       const page = await this.pdfDoc.getPage(this.currentPage);
       const canvas = this.pdfCanvas.nativeElement;
       const context = canvas.getContext('2d');
+
+      // 确保context可用
+      if (!context) {
+        console.error('Cannot get canvas 2D context');
+        return;
+      }
 
       // 计算缩放比例
       let actualScale = this.scale;
@@ -197,17 +211,15 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
       canvas.height = viewport.height;
 
       // 清除canvas
-      if (context) {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-      }
+      context.clearRect(0, 0, canvas.width, canvas.height);
 
       // 渲染页面
-      if (context) {
-        await page.render({
-          canvasContext: context,
-          viewport: viewport
-        }).promise;
-      }
+      await page.render({
+        canvasContext: context,
+        viewport: viewport
+      }).promise;
+
+      console.log(`✅ Page ${this.currentPage} rendered successfully!`);
 
     } catch (error: any) {
       console.error('页面渲染失败:', error);
