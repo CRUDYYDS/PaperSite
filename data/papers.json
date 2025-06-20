@@ -38,14 +38,128 @@
       "filePath": "papers/2025/ai/1750432983606_the_llama_3_herd_of_models.pdf",
       "downloadCount": 0,
       "createdAt": "2025-06-20T15:23:08.725Z"
+    },
+    {
+      "id": "mc4zlmfmc4lsn",
+      "title": "Deep Residual Learning for Image Recognition",
+      "authors": [
+        "Kaiming",
+        "He Xiangyu",
+        "Zhang Shaoqing",
+        "Ren Jian",
+        "Sun"
+      ],
+      "abstract": "Deeper neural networks are more difficult to train. We\npresent a residual learning framework to ease the training\nof networks that are substantially deeper than those used\npreviously. We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions. We provide comprehensive empirical evidence showing that these residual\nnetworks are easier to optimize, and can gain accuracy from\nconsiderably increased depth. On the ImageNet dataset we\nevaluate residual nets with a depth of up to 152 layers—8×\ndeeper than VGG nets [41] but still having lower complexity. An ensemble of these residual nets achieves 3.57% error\non the ImageNet test set. This result won the 1st place on the\nILSVRC 2015 classification task. We also present analysis\non CIFAR-10 with 100 and 1000 layers.\nThe depth of representations is of central importance\nfor many visual recognition tasks. Solely due to our extremely deep representations, we obtain a 28% relative improvement on the COCO object detection dataset. Deep\nresidual nets are foundations of our submissions to ILSVRC\n& COCO 2015 competitions1\n, where we also won the 1st\nplaces on the tasks of ImageNet detection, ImageNet localization, COCO detection, and COCO segmentation.\n",
+      "keywords": [
+        "Resnet"
+      ],
+      "category": "人工智能",
+      "publishDate": "2025-06-20",
+      "fileName": "resnet.pdf",
+      "fileSize": 819383,
+      "repository": "master",
+      "filePath": "papers/2025/ai/1750434655428_deep_residual_learning_for_image_recognition.pdf",
+      "downloadCount": 0,
+      "createdAt": "2025-06-20T15:50:58.258Z"
+    },
+    {
+      "id": "mc4zn7lgz3279",
+      "title": "RT-1: ROBOTICS TRANSFORMER FOR REAL-WORLD CONTROL AT SCALE",
+      "authors": [
+        "Anthony Brohan∗",
+        "Noah Brown∗",
+        "Justice Carbajal∗",
+        "Yevgen Chebotar∗",
+        "Joseph Dabis∗",
+        "Chelsea Finn∗",
+        "Keerthana Gopalakrishnan∗",
+        "Karol Hausman∗",
+        "Alex Herzog†",
+        "Jasmine Hsu∗",
+        "Julian Ibarz∗",
+        "Brian Ichter∗",
+        "Alex Irpan∗",
+        "Tomas Jackson∗",
+        "Sally Jesmonth∗",
+        "Nikhil J Joshi∗",
+        "Ryan Julian∗",
+        "Dmitry Kalashnikov∗",
+        "Yuheng Kuang∗",
+        "Isabel Leal∗",
+        "Kuang-Huei Lee‡",
+        "Sergey Levine∗",
+        "Yao Lu∗",
+        "Utsav Malla∗",
+        "Deeksha Manjunath∗",
+        "Igor Mordatch‡",
+        "Ofir Nachum‡",
+        "Carolina Parada∗",
+        "Jodilyn Peralta∗",
+        "Emily Perez∗",
+        "Karl Pertsch∗",
+        "Jornell Quiambao∗",
+        "Kanishka Rao∗",
+        "Michael Ryoo∗",
+        "Grecia Salazar∗",
+        "Pannag Sanketi∗",
+        "Kevin Sayed∗",
+        "Jaspiar Singh∗",
+        "Sumedh Sontakke‡",
+        "Austin Stone∗",
+        "Clayton Tan∗",
+        "Huong Tran∗",
+        "Vincent Vanhoucke∗",
+        "Steve Vega∗",
+        "Quan Vuong∗",
+        "Fei Xia∗",
+        "Ted Xiao∗",
+        "Peng Xu∗",
+        "Sichun Xu∗",
+        "Tianhe Yu∗",
+        "Brianna Zitkovich∗"
+      ],
+      "abstract": "By transferring knowledge from large, diverse, task-agnostic datasets, modern machine learning models can solve specific downstream tasks either zero-shot or with\nsmall task-specific datasets to a high level of performance. While this capability\nhas been demonstrated in other fields such as computer vision, natural language\nprocessing or speech recognition, it remains to be shown in robotics, where the\ngeneralization capabilities of the models are particularly critical due to the difficulty of collecting real-world robotic data. We argue that one of the keys to\nthe success of such general robotic models lies with open-ended task-agnostic\ntraining, combined with high-capacity architectures that can absorb all of the diverse, robotic data. In this paper, we present a model class, dubbed Robotics\nTransformer, that exhibits promising scalable model properties. We verify our\nconclusions in a study of different model classes and their ability to generalize as\na function of the data size, model size, and data diversity based on a large-scale\ndata collection on real robots performing real-world tasks. The project’s website\nand videos can be found at robotics-transformer.github.io",
+      "keywords": [
+        "RT",
+        "RT1"
+      ],
+      "category": "人工智能",
+      "publishDate": "2025-06-20",
+      "fileName": "rt1.pdf",
+      "fileSize": 14596700,
+      "repository": "master",
+      "filePath": "papers/2025/ai/1750434725904_rt_1__robotics_transformer_for_real_world_control_.pdf",
+      "downloadCount": 0,
+      "createdAt": "2025-06-20T15:52:12.340Z"
+    },
+    {
+      "id": "mc4zvvp0c696u",
+      "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+      "authors": [
+        "Jacob Devlin",
+        "Ming-Wei Chang",
+        "Kenton Lee",
+        "Kristina Toutanova"
+      ],
+      "abstract": "We introduce a new language representation model called BERT, which stands for\nBidirectional Encoder Representations from\nTransformers. Unlike recent language representation models (Peters et al., 2018a; Radford et al., 2018), BERT is designed to pretrain deep bidirectional representations from\nunlabeled text by jointly conditioning on both\nleft and right context in all layers. As a result, the pre-trained BERT model can be finetuned with just one additional output layer\nto create state-of-the-art models for a wide\nrange of tasks, such as question answering and\nlanguage inference, without substantial taskspecific architecture modifications.\nBERT is conceptually simple and empirically\npowerful. It obtains new state-of-the-art results on eleven natural language processing\ntasks, including pushing the GLUE score to\n80.5% (7.7% point absolute improvement),\nMultiNLI accuracy to 86.7% (4.6% absolute\nimprovement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) and SQuAD v2.0 Test F1 to 83.1\n(5.1 point absolute improvement).\n",
+      "keywords": [
+        "BERT"
+      ],
+      "category": "人工智能",
+      "publishDate": "2025-06-20",
+      "fileName": "BERT.pdf",
+      "fileSize": 775166,
+      "repository": "master",
+      "filePath": "papers/2025/ai/1750435130388_bert__pre_training_of_deep_bidirectional_transform.pdf",
+      "downloadCount": 0,
+      "createdAt": "2025-06-20T15:58:56.820Z"
     }
   ],
   "metadata": {
-    "totalCount": 4,
-    "lastUpdated": "2025-06-20T15:23:37.577Z",
+    "totalCount": 5,
+    "lastUpdated": "2025-06-20T15:58:57.508Z",
     "categories": {
-      "其他": 1,
-      "人工智能": 3
+      "人工智能": 5
     }
   }
 }
