@@ -92,12 +92,38 @@ export class PaperDetailComponent implements OnInit {
       return this.paper.fileUrl;
     }
     
-    // 如果是开发环境，尝试使用assets路径
-    if (!EnvironmentUtil.isGitHubPagesMode()) {
-      if (this.paper.filePath && this.paper.filePath.startsWith('assets/')) {
-        const url = `/${this.paper.filePath}`;
-        console.log('Using assets path:', url);
-        return url;
+    // 处理本地文件路径
+    if (this.paper.filePath) {
+      // 如果在GitHub Pages模式下
+      if (EnvironmentUtil.isGitHubPagesMode()) {
+        // 检查filePath是否已经被转换，如果是，直接使用原始路径
+        if (this.paper.filePath.startsWith('papers/')) {
+          const url = `/${this.paper.filePath}`;
+          console.log('Using original papers path:', url);
+          return url;
+        } else {
+          const baseHref = EnvironmentUtil.getBaseHref().replace(/\/$/, '');
+          const url = `${baseHref}/${this.paper.filePath}`;
+          console.log('Using GitHub Pages URL:', url);
+          return url;
+        }
+      } else {
+        // 开发模式：检查不同的路径格式
+        if (this.paper.filePath.startsWith('assets/')) {
+          const url = `/${this.paper.filePath}`;
+          console.log('Using assets path:', url);
+          return url;
+        } else if (this.paper.filePath.startsWith('papers/')) {
+          // 直接使用papers路径（如果已配置在angular.json中）
+          const url = `/${this.paper.filePath}`;
+          console.log('Using papers path:', url);
+          return url;
+        } else {
+          // 默认假设在assets目录下
+          const url = `/assets/papers/${this.paper.fileName}`;
+          console.log('Using default assets path:', url);
+          return url;
+        }
       }
     }
     

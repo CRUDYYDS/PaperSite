@@ -1,27 +1,10 @@
 {
   "papers": [
     {
-      "id": "test001",
-      "title": "PDF.js测试文档",
-      "authors": ["Mozilla"],
-      "abstract": "这是一个用于测试PDF预览功能的示例文档。",
-      "keywords": ["测试", "PDF", "预览"],
-      "category": "人工智能",
-      "publishDate": "2024-01-01",
-      "fileName": "test.pdf",
-      "fileSize": 1024000,
-      "repository": "main",
-      "filePath": "test",
-      "fileUrl": "https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf",
-      "downloadCount": 0,
-      "createdAt": "2024-01-01T00:00:00.000Z"
+      "id": "mc3meiuvlzhop",
+      "title": "BERT",
+      "filePath": "papers/2025/ai/1750352023381_bert.pdf",
+      "fileUrl": "papers/2025/ai/1750352023381_bert.pdf"
     }
-  ],
-  "metadata": {
-    "totalCount": 1,
-    "lastUpdated": "2024-01-01T00:00:00.000Z",
-    "categories": {
-      "人工智能": 1
-    }
-  }
+  ]
 }

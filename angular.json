@@ -26,12 +26,17 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
+              "src/favicon.ico", 
               "src/assets",
               {
                 "glob": "**/*",
                 "input": "data/",
                 "output": "/data/"
+              },
+              {
+                "glob": "**/*.pdf",
+                "input": "papers/",
+                "output": "/papers/"
               }
             ],
             "styles": [
