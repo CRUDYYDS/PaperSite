@@ -131,13 +131,35 @@
       "filePath": "papers/2025/ai/1750434725904_rt_1__robotics_transformer_for_real_world_control_.pdf",
       "downloadCount": 0,
       "createdAt": "2025-06-20T15:52:12.340Z"
+    },
+    {
+      "id": "mc4zvvp0c696u",
+      "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+      "authors": [
+        "Jacob Devlin",
+        "Ming-Wei Chang",
+        "Kenton Lee",
+        "Kristina Toutanova"
+      ],
+      "abstract": "We introduce a new language representation model called BERT, which stands for\nBidirectional Encoder Representations from\nTransformers. Unlike recent language representation models (Peters et al., 2018a; Radford et al., 2018), BERT is designed to pretrain deep bidirectional representations from\nunlabeled text by jointly conditioning on both\nleft and right context in all layers. As a result, the pre-trained BERT model can be finetuned with just one additional output layer\nto create state-of-the-art models for a wide\nrange of tasks, such as question answering and\nlanguage inference, without substantial taskspecific architecture modifications.\nBERT is conceptually simple and empirically\npowerful. It obtains new state-of-the-art results on eleven natural language processing\ntasks, including pushing the GLUE score to\n80.5% (7.7% point absolute improvement),\nMultiNLI accuracy to 86.7% (4.6% absolute\nimprovement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) and SQuAD v2.0 Test F1 to 83.1\n(5.1 point absolute improvement).\n",
+      "keywords": [
+        "BERT"
+      ],
+      "category": "人工智能",
+      "publishDate": "2025-06-20",
+      "fileName": "BERT.pdf",
+      "fileSize": 775166,
+      "repository": "master",
+      "filePath": "papers/2025/ai/1750435130388_bert__pre_training_of_deep_bidirectional_transform.pdf",
+      "downloadCount": 0,
+      "createdAt": "2025-06-20T15:58:56.820Z"
     }
   ],
   "metadata": {
-    "totalCount": 4,
-    "lastUpdated": "2025-06-20T15:52:12.737Z",
+    "totalCount": 5,
+    "lastUpdated": "2025-06-20T15:58:57.508Z",
     "categories": {
-      "人工智能": 4
+      "人工智能": 5
     }
   }
 }
