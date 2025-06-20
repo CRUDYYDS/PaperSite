@@ -79,15 +79,16 @@ export class PaperDetailComponent implements OnInit {
     if (this.paper.filePath) {
       // 如果在GitHub Pages模式下
       if (EnvironmentUtil.isGitHubPagesMode()) {
+        const baseHref = EnvironmentUtil.getBaseHref().replace(/\/$/, ''); // 移除末尾斜杠
+        
         // 检查filePath格式，构建正确的URL
         if (this.paper.filePath.startsWith('papers/')) {
-          // 直接使用根路径，因为papers目录应该在网站根目录
-          const url = `/${this.paper.filePath}`;
-          console.log('Using GitHub Pages papers path:', url);
+          // 使用baseHref + filePath构建完整的GitHub Pages URL
+          const url = `${baseHref}/${this.paper.filePath}`;
+          console.log('Using GitHub Pages papers path with baseHref:', url);
           return url;
         } else {
-          // 使用baseHref构建完整路径
-          const baseHref = EnvironmentUtil.getBaseHref().replace(/\/$/, '');
+          // 其他格式也使用baseHref
           const url = `${baseHref}/${this.paper.filePath}`;
           console.log('Using GitHub Pages URL with baseHref:', url);
           return url;
@@ -218,7 +219,12 @@ export class PaperDetailComponent implements OnInit {
     console.log('Checking PDF accessibility for URL:', url);
     
     // 检查是否为有效的URL
-    const isAccessible = url.startsWith('http') || url.startsWith('/assets') || url.startsWith('assets/');
+    const isAccessible = url.startsWith('http') || 
+                        url.startsWith('/assets') || 
+                        url.startsWith('assets/') ||
+                        url.startsWith('/PaperSite/') ||
+                        url.includes('/papers/');
+    
     console.log('PDF accessible:', isAccessible);
     
     return isAccessible;
