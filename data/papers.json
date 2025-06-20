@@ -1,12 +1,6 @@
 {
   "papers": [
     {
-      "id": "mc3meiuvlzhop",
-      "title": "BERT",
-      "filePath": "papers/2025/ai/1750352023381_bert.pdf",
-      "fileUrl": "papers/2025/ai/1750352023381_bert.pdf"
-    },
-    {
       "id": "mc4yjuwc0o8nu",
       "title": "Language Models are Few-Shot Learners (GPT3)",
       "authors": [
