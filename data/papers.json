@@ -1,79 +1,27 @@
 {
   "papers": [
     {
-      "id": "sample001",
-      "title": "深度学习在自然语言处理中的应用研究",
-      "authors": [
-        "张三",
-        "李四"
-      ],
-      "abstract": "本文系统性地介绍了深度学习技术在自然语言处理领域的最新进展，包括词向量表示、循环神经网络、注意力机制等关键技术。",
-      "keywords": [
-        "深度学习",
-        "自然语言处理",
-        "神经网络"
-      ],
+      "id": "test001",
+      "title": "PDF.js测试文档",
+      "authors": ["Mozilla"],
+      "abstract": "这是一个用于测试PDF预览功能的示例文档。",
+      "keywords": ["测试", "PDF", "预览"],
       "category": "人工智能",
-      "publishDate": "2024-03-15",
-      "fileName": "sample_paper.pdf",
-      "fileSize": 2048576,
+      "publishDate": "2024-01-01",
+      "fileName": "test.pdf",
+      "fileSize": 1024000,
       "repository": "main",
-      "filePath": "external",
+      "filePath": "test",
       "fileUrl": "https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf",
       "downloadCount": 0,
-      "createdAt": "2024-03-15T10:00:00.000Z"
-    },
-    {
-      "id": "mc3meiuvlzhop",
-      "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
-      "authors": [
-        "Jacob Devlin",
-        "Ming-Wei Chang",
-        "Kenton Lee",
-        "Kristina Toutanova"
-      ],
-      "abstract": "We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models, BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. As a result, the pre-trained BERT model can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks.",
-      "keywords": [
-        "BERT",
-        "Transformer",
-        "Natural Language Processing",
-        "Pre-training"
-      ],
-      "category": "人工智能",
-      "publishDate": "2018-10-11",
-      "fileName": "BERT_paper.pdf",
-      "fileSize": 775166,
-      "repository": "master",
-      "filePath": "external",
-      "fileUrl": "https://arxiv.org/pdf/1810.04805.pdf",
-      "downloadCount": 0,
-      "createdAt": "2025-06-19T16:53:45.848Z"
-    },
-    {
-      "id": "mc3ofdjm3wqff",
-      "title": "Lattice LSTM",
-      "authors": [
-        "Singapore University of Technology and Design"
-      ],
-      "abstract": "We investigate a lattice-structured LSTM\nmodel for Chinese NER, which encodes\na sequence of input characters as well as\nall potential words that match a lexicon.\nCompared with character-based methods,\nour model explicitly leverages word and\nword sequence information. Compared\nwith word-based methods, lattice LSTM\ndoes not suffer from segmentation errors.\nGated recurrent cells allow our model to\nchoose the most relevant characters and\nwords from a sentence for better NER results. Experiments on various datasets\nshow that lattice LSTM outperforms both\nword-based and character-based LSTM\nbaselines, achieving the best results.",
-      "keywords": [
-        "LSTM"
-      ],
-      "category": "人工智能",
-      "publishDate": "2025-06-19",
-      "fileName": "Lattice LSTM.pdf",
-      "fileSize": 557500,
-      "repository": "master",
-      "filePath": "papers/2025/ai/1750355421979_lattice_lstm.pdf",
-      "downloadCount": 0,
-      "createdAt": "2025-06-19T17:50:24.850Z"
+      "createdAt": "2024-01-01T00:00:00.000Z"
     }
   ],
   "metadata": {
-    "totalCount": 3,
-    "lastUpdated": "2025-06-19T17:50:25.266Z",
+    "totalCount": 1,
+    "lastUpdated": "2024-01-01T00:00:00.000Z",
     "categories": {
-      "人工智能": 3
+      "人工智能": 1
     }
   }
 }

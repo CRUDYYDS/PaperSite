@@ -68,15 +68,23 @@ export class PaperDetailComponent implements OnInit {
   getPdfUrl(): string {
     if (!this.paper) return '';
     
-    console.log('Paper data:', this.paper); // 调试用
+    console.log('=== PDF URL Debug ===');
+    console.log('Paper data:', this.paper);
+    console.log('fileUrl:', this.paper.fileUrl);
+    console.log('filePath:', this.paper.filePath);
+    console.log('GitHub Pages Mode:', EnvironmentUtil.isGitHubPagesMode());
+    console.log('Base Href:', EnvironmentUtil.getBaseHref());
     
-    // 优先使用 fileUrl
-    if (this.paper.fileUrl && this.paper.fileUrl !== '') {
-      console.log('Using fileUrl:', this.paper.fileUrl);
+    // 优先使用 fileUrl，但要检查是否为有效URL
+    if (this.paper.fileUrl && 
+        this.paper.fileUrl !== '' && 
+        !this.paper.fileUrl.includes('/PaperSite/') &&
+        (this.paper.fileUrl.startsWith('http') || this.paper.fileUrl.startsWith('/assets'))) {
+      console.log('Using valid fileUrl:', this.paper.fileUrl);
       return this.paper.fileUrl;
     }
     
-    // 根据环境构建URL
+    // 如果fileUrl不可用，根据环境构建URL
     if (EnvironmentUtil.isGitHubPagesMode()) {
       // GitHub Pages 模式：使用完整的GitHub Pages URL
       const baseHref = EnvironmentUtil.getBaseHref().replace(/\/$/, '');
@@ -84,19 +92,16 @@ export class PaperDetailComponent implements OnInit {
       console.log('Using GitHub Pages URL:', url);
       return url;
     } else {
-      // 开发模式：所有静态文件都必须在assets目录下
-      // 检查文件路径并构建正确的assets路径
+      // 开发模式：构建assets路径
       if (this.paper.filePath.startsWith('assets/')) {
         const url = `/${this.paper.filePath}`;
         console.log('Using assets path:', url);
         return url;
       } else if (this.paper.filePath.startsWith('papers/')) {
-        // 将papers路径映射到assets下
         const url = `/assets/${this.paper.filePath}`;
         console.log('Using mapped assets path:', url);
         return url;
       } else {
-        // 默认假设在assets目录下
         const url = `/assets/papers/${this.paper.fileName}`;
         console.log('Using default assets path:', url);
         return url;
