@@ -172,13 +172,39 @@
       "filePath": "papers/2025/ai/1750465402585_imagenet_classification_with_deep_convolutional_ne.pdf",
       "downloadCount": 0,
       "createdAt": "2025-06-21T00:23:26.016Z"
+    },
+    {
+      "id": "mc5kth4ln4ui3",
+      "title": "Attention Is All You Need",
+      "authors": [
+        "Ashish Vaswani∗",
+        "Noam Shazeer∗",
+        "Niki Parmar∗",
+        "Jakob Uszkoreit∗",
+        "Llion Jones∗",
+        "Aidan N. Gomez∗ †",
+        "Łukasz Kaiser∗",
+        "Illia Polosukhin∗ ‡"
+      ],
+      "abstract": "The dominant sequence transduction models are based on complex recurrent or\nconvolutional neural networks that include an encoder and a decoder. The best\nperforming models also connect the encoder and decoder through an attention\nmechanism. We propose a new simple network architecture, the Transformer,\nbased solely on attention mechanisms, dispensing with recurrence and convolutions\nentirely. Experiments on two machine translation tasks show these models to\nbe superior in quality while being more parallelizable and requiring significantly\nless time to train. Our model achieves 28.4 BLEU on the WMT 2014 Englishto-German translation task, improving over the existing best results, including\nensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task,\nour model establishes a new single-model state-of-the-art BLEU score of 41.8 after\ntraining for 3.5 days on eight GPUs, a small fraction of the training costs of the\nbest models from the literature. We show that the Transformer generalizes well to\nother tasks by applying it successfully to English constituency parsing both with\nlarge and limited training data.\n",
+      "keywords": [
+        "Transformer"
+      ],
+      "category": "人工智能",
+      "publishDate": "2025-06-21",
+      "fileName": "Transformer.pdf",
+      "fileSize": 2215244,
+      "repository": "master",
+      "filePath": "papers/2025/ai/1750470293213_attention_is_all_you_need.pdf",
+      "downloadCount": 0,
+      "createdAt": "2025-06-21T01:44:56.565Z"
     }
   ],
   "metadata": {
-    "totalCount": 6,
-    "lastUpdated": "2025-06-21T00:23:26.923Z",
+    "totalCount": 7,
+    "lastUpdated": "2025-06-21T01:44:57.138Z",
     "categories": {
-      "人工智能": 6
+      "人工智能": 7
     }
   }
 }
