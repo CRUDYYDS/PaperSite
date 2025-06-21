@@ -4,6 +4,7 @@
 
 **项目名称**: PaperSite - 学术论文管理系统  
 **版本**: v1.0.0  
+**项目地址**: https://github.com/CRUDYYDS/PaperSite  
 **最后更新**: 2025年6月20日
 
 ---
@@ -147,6 +148,24 @@ interface Paper {
 ```
 
 ### 2.3 用户界面设计
+首页：
+![项目首页](imgs/PaperSite_main_page.png)
+
+论文列表：
+![论文列表](imgs/PaperSite_PaperList.png)
+搜索：
+![论文搜索](imgs/PaperSite_Search.png)
+论文详情：
+![论文详情](imgs/PaperSite_PaperDetail.png)
+论文预览：
+![论文预览](imgs/PaperSite_PaperView.png)
+token配置：
+![token配置](imgs/PaperSite_TokenConfig.png)
+上传表单：
+![上传表单](imgs/PaperSite_upload_form.png)
+上传结果：
+![上传结果](imgs/PaperSite_upload_success.png)
+
 
 #### 2.3.1 设计原则
 - **简洁性**: 界面简洁清晰，避免冗余元素
@@ -166,6 +185,7 @@ interface Paper {
 │            Footer                   │
 └─────────────────────────────────────┘
 ```
+
 
 #### 2.3.3 色彩方案
 - **主色调**: #007bff (蓝色)
@@ -622,6 +642,7 @@ export const environment = {
 ```
 故障发现 → 问题诊断 → 影响评估 → 修复方案 → 实施修复 → 验证结果 → 总结改进
 ```
+
 
 ---
 

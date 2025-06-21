@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="papersite-%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E6%96%87%E6%A1%A3">PaperSite 软件工程文档</h1>
+<h2 id="%E9%A1%B9%E7%9B%AE%E6%A6%82%E8%BF%B0">项目概述</h2>
+<p><strong>项目名称</strong>: PaperSite - 学术论文管理系统<br>
+<strong>版本</strong>: v1.0.0<br>
+<strong>项目地址</strong>: https://github.com/CRUDYYDS/PaperSite<br>
+<strong>最后更新</strong>: 2025年6月20日</p>
+<hr>
+<h2 id="1-%E9%9C%80%E6%B1%82%E6%96%87%E6%A1%A3">1. 需求文档</h2>
+<h3 id="11-%E9%A1%B9%E7%9B%AE%E8%83%8C%E6%99%AF">1.1 项目背景</h3>
+<p>随着学术研究的不断发展，研究人员需要一个高效、直观的平台来管理、浏览和分享学术论文。PaperSite旨在提供一个现代化的Web应用，支持论文的在线预览、分类管理和便捷搜索。</p>
+<h3 id="12-%E5%8A%9F%E8%83%BD%E9%9C%80%E6%B1%82">1.2 功能需求</h3>
+<h4 id="121-%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD">1.2.1 核心功能</h4>
+<ul>
+<li><strong>F001</strong>: 论文浏览 - 用户可以浏览所有论文列表，支持分页显示</li>
+<li><strong>F002</strong>: 论文详情 - 显示论文的详细信息，包括标题、作者、摘要、关键词等</li>
+<li><strong>F003</strong>: PDF预览 - 在线预览PDF论文内容，无需下载</li>
+<li><strong>F004</strong>: 论文搜索 - 支持按标题、作者、关键词搜索论文</li>
+<li><strong>F005</strong>: 分类筛选 - 按学科分类筛选论文</li>
+<li><strong>F006</strong>: 论文下载 - 提供PDF文件下载功能</li>
+</ul>
+<h4 id="122-%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD">1.2.2 管理功能</h4>
+<ul>
+<li><strong>F007</strong>: 论文上传 - 通过GitHub API上传新论文</li>
+<li><strong>F008</strong>: 元数据管理 - 添加和编辑论文的元信息</li>
+<li><strong>F009</strong>: 分类管理 - 管理论文分类体系</li>
+<li><strong>F010</strong>: GitHub集成 - 与GitHub仓库同步论文文件</li>
+</ul>
+<h4 id="123-%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C%E5%8A%9F%E8%83%BD">1.2.3 用户体验功能</h4>
+<ul>
+<li><strong>F011</strong>: 响应式设计 - 适配桌面端和移动端设备</li>
+<li><strong>F012</strong>: 加载状态 - 显示加载进度和状态反馈</li>
+<li><strong>F013</strong>: 错误处理 - 友好的错误提示和处理机制</li>
+<li><strong>F014</strong>: 快捷键支持 - PDF预览支持键盘快捷键操作</li>
+</ul>
+<h3 id="13-%E9%9D%9E%E5%8A%9F%E8%83%BD%E9%9C%80%E6%B1%82">1.3 非功能需求</h3>
+<h4 id="131-%E6%80%A7%E8%83%BD%E9%9C%80%E6%B1%82">1.3.1 性能需求</h4>
+<ul>
+<li><strong>NFR001</strong>: 页面加载时间不超过3秒</li>
+<li><strong>NFR002</strong>: PDF预览响应时间不超过5秒</li>
+<li><strong>NFR003</strong>: 支持并发用户数不少于100人</li>
+</ul>
+<h4 id="132-%E5%85%BC%E5%AE%B9%E6%80%A7%E9%9C%80%E6%B1%82">1.3.2 兼容性需求</h4>
+<ul>
+<li><strong>NFR004</strong>: 支持Chrome 90+、Firefox 88+、Safari 14+、Edge 90+</li>
+<li><strong>NFR005</strong>: 响应式设计，支持1024px及以上桌面端，768px及以上平板端</li>
+<li><strong>NFR006</strong>: 移动端兼容iOS 12+和Android 8+</li>
+</ul>
+<h4 id="133-%E5%AE%89%E5%85%A8%E9%9C%80%E6%B1%82">1.3.3 安全需求</h4>
+<ul>
+<li><strong>NFR007</strong>: GitHub Token安全管理，仅会话存储</li>
+<li><strong>NFR008</strong>: 防止XSS和CSRF攻击</li>
+<li><strong>NFR009</strong>: HTTPS加密传输</li>
+</ul>
+<h4 id="134-%E5%8F%AF%E7%94%A8%E6%80%A7%E9%9C%80%E6%B1%82">1.3.4 可用性需求</h4>
+<ul>
+<li><strong>NFR010</strong>: 系统可用性达到99.5%</li>
+<li><strong>NFR011</strong>: 用户界面直观易用，新用户5分钟内能掌握基本操作</li>
+</ul>
+<h3 id="14-%E7%94%A8%E6%88%B7%E6%95%85%E4%BA%8B">1.4 用户故事</h3>
+<h4 id="141-%E7%A0%94%E7%A9%B6%E4%BA%BA%E5%91%98%E7%94%A8%E6%88%B7">1.4.1 研究人员用户</h4>
+<pre class="hljs"><code><div>作为一名研究人员
+我希望能够快速搜索相关领域的论文
+以便找到我研究需要的参考文献
+</div></code></pre>
+<h4 id="142-%E5%AD%A6%E7%94%9F%E7%94%A8%E6%88%B7">1.4.2 学生用户</h4>
+<pre class="hljs"><code><div>作为一名学生
+我希望能够在线预览PDF论文
+以便在不下载的情况下快速浏览论文内容
+</div></code></pre>
+<h4 id="143-%E7%AE%A1%E7%90%86%E5%91%98%E7%94%A8%E6%88%B7">1.4.3 管理员用户</h4>
+<pre class="hljs"><code><div>作为系统管理员
+我希望能够批量上传和管理论文
+以便维护一个完整的论文数据库
+</div></code></pre>
+<hr>
+<h2 id="2-%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3-design">2. 设计文档 (Design)</h2>
+<h3 id="21-%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84">2.1 系统架构</h3>
+<h4 id="211-%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84">2.1.1 整体架构</h4>
+<pre class="hljs"><code><div>┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   前端应用      │    │   静态资源      │    │   GitHub API    │
+│   (Angular)     │◄──►│   (JSON/PDF)    │◄──►│                 │
+│                 │    │                 │    │                 │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+</div></code></pre>
+<h4 id="212-%E6%8A%80%E6%9C%AF%E6%A0%88">2.1.2 技术栈</h4>
+<ul>
+<li><strong>前端框架</strong>: Angular 17</li>
+<li><strong>编程语言</strong>: TypeScript</li>
+<li><strong>样式语言</strong>: SCSS</li>
+<li><strong>PDF处理</strong>: PDF.js 3.11.174</li>
+<li><strong>HTTP客户端</strong>: Angular HttpClient</li>
+<li><strong>状态管理</strong>: RxJS</li>
+<li><strong>构建工具</strong>: Angular CLI</li>
+<li><strong>部署平台</strong>: GitHub Pages</li>
+</ul>
+<h3 id="22-%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1">2.2 模块设计</h3>
+<h4 id="221-%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E7%BB%93%E6%9E%84">2.2.1 核心模块结构</h4>
+<pre class="hljs"><code><div>src/app/
+├── core/                   # 核心模块
+│   ├── services/          # 核心服务
+│   └── utils/             # 工具类
+├── features/              # 功能模块
+│   ├── home/              # 首页
+│   ├── paper-list/        # 论文列表
+│   ├── paper-detail/      # 论文详情
+│   └── search/            # 搜索功能
+├── shared/                # 共享模块
+│   ├── components/        # 共享组件
+│   └── pipes/             # 管道
+├── layout/                # 布局组件
+├── admin/                 # 管理功能
+└── models/                # 数据模型
+</div></code></pre>
+<h4 id="222-%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B">2.2.2 数据模型</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">interface</span> Paper {
+  id: <span class="hljs-built_in">string</span>;
+  title: <span class="hljs-built_in">string</span>;
+  authors: <span class="hljs-built_in">string</span>[];
+  <span class="hljs-keyword">abstract</span>?: <span class="hljs-built_in">string</span>;
+  keywords: <span class="hljs-built_in">string</span>[];
+  category: <span class="hljs-built_in">string</span>;
+  publishDate: <span class="hljs-built_in">string</span>;
+  fileName: <span class="hljs-built_in">string</span>;
+  fileSize: <span class="hljs-built_in">number</span>;
+  repository: <span class="hljs-built_in">string</span>;
+  filePath: <span class="hljs-built_in">string</span>;
+  fileUrl?: <span class="hljs-built_in">string</span>;
+  downloadCount: <span class="hljs-built_in">number</span>;
+  createdAt: <span class="hljs-built_in">string</span>;
+}
+</div></code></pre>
+<h3 id="23-%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2%E8%AE%BE%E8%AE%A1">2.3 用户界面设计</h3>
+<p>首页：
+<img src="imgs/PaperSite_main_page.png" alt="项目首页"></p>
+<p>论文列表：
+<img src="imgs/PaperSite_PaperList.png" alt="论文列表">
+搜索：
+<img src="imgs/PaperSite_Search.png" alt="论文搜索">
+论文详情：
+<img src="imgs/PaperSite_PaperDetail.png" alt="论文详情">
+论文预览：
+<img src="imgs/PaperSite_PaperView.png" alt="论文预览">
+token配置：
+<img src="imgs/PaperSite_TokenConfig.png" alt="token配置">
+上传表单：
+<img src="imgs/PaperSite_upload_form.png" alt="上传表单">
+上传结果：
+<img src="imgs/PaperSite_upload_success.png" alt="上传结果"></p>
+<h4 id="231-%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99">2.3.1 设计原则</h4>
+<ul>
+<li><strong>简洁性</strong>: 界面简洁清晰，避免冗余元素</li>
+<li><strong>一致性</strong>: 保持视觉和交互的一致性</li>
+<li><strong>可访问性</strong>: 支持键盘导航和屏幕阅读器</li>
+<li><strong>响应性</strong>: 适配不同设备和屏幕尺寸</li>
+</ul>
+<h4 id="232-%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80">2.3.2 页面布局</h4>
+<pre class="hljs"><code><div>┌─────────────────────────────────────┐
+│            Header (导航栏)           │
+├─────────────────────────────────────┤
+│                                     │
+│            Main Content             │
+│                                     │
+├─────────────────────────────────────┤
+│            Footer                   │
+└─────────────────────────────────────┘
+</div></code></pre>
+<h4 id="233-%E8%89%B2%E5%BD%A9%E6%96%B9%E6%A1%88">2.3.3 色彩方案</h4>
+<ul>
+<li><strong>主色调</strong>: #007bff (蓝色)</li>
+<li><strong>辅助色</strong>: #6c757d (灰色)</li>
+<li><strong>成功色</strong>: #28a745 (绿色)</li>
+<li><strong>警告色</strong>: #ffc107 (黄色)</li>
+<li><strong>错误色</strong>: #dc3545 (红色)</li>
+</ul>
+<h3 id="24-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1">2.4 数据库设计</h3>
+<h4 id="241-%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88">2.4.1 数据存储方案</h4>
+<p>采用JSON文件作为数据存储，包括：</p>
+<ul>
+<li><code>papers.json</code>: 论文数据和元信息</li>
+<li><code>categories.json</code>: 分类数据</li>
+</ul>
+<h4 id="242-%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88">2.4.2 文件存储方案</h4>
+<ul>
+<li><strong>PDF文件</strong>: 存储在GitHub仓库的<code>papers/</code>目录</li>
+<li><strong>元数据</strong>: 存储在<code>data/</code>目录</li>
+</ul>
+<hr>
+<h2 id="3-%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3-development">3. 开发文档 (Development)</h2>
+<h3 id="31-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83">3.1 开发环境</h3>
+<h4 id="311-%E7%8E%AF%E5%A2%83%E8%A6%81%E6%B1%82">3.1.1 环境要求</h4>
+<ul>
+<li><strong>Node.js</strong>: 18.x 或更高版本</li>
+<li><strong>npm</strong>: 9.x 或更高版本</li>
+<li><strong>Angular CLI</strong>: 17.x</li>
+<li><strong>操作系统</strong>: Windows 10+, macOS 10.15+, Ubuntu 18.04+</li>
+</ul>
+<h4 id="312-%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96">3.1.2 项目初始化</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># 克隆项目</span>
+git <span class="hljs-built_in">clone</span> https://github.com/CRUDYYDS/PaperSite.git
+<span class="hljs-built_in">cd</span> PaperSite
+
+<span class="hljs-comment"># 安装依赖</span>
+npm install
+
+<span class="hljs-comment"># 启动开发服务器</span>
+ng serve
+
+<span class="hljs-comment"># 构建项目</span>
+ng build
+</div></code></pre>
+<h3 id="32-%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83">3.2 开发规范</h3>
+<h4 id="321-%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83">3.2.1 代码规范</h4>
+<ul>
+<li><strong>TypeScript</strong>: 使用严格模式，启用所有类型检查</li>
+<li><strong>命名规范</strong>:
+<ul>
+<li>组件: PascalCase (e.g., <code>PaperDetailComponent</code>)</li>
+<li>服务: PascalCase + Service (e.g., <code>PaperService</code>)</li>
+<li>变量/方法: camelCase</li>
+<li>常量: UPPER_SNAKE_CASE</li>
+</ul>
+</li>
+<li><strong>文件命名</strong>: kebab-case (e.g., <code>paper-detail.component.ts</code>)</li>
+</ul>
+<h4 id="322-%E7%BB%84%E4%BB%B6%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83">3.2.2 组件开发规范</h4>
+<pre class="hljs"><code><div><span class="hljs-meta">@Component</span>({
+  selector: <span class="hljs-string">'app-paper-detail'</span>,
+  templateUrl: <span class="hljs-string">'./paper-detail.component.html'</span>,
+  styleUrls: [<span class="hljs-string">'./paper-detail.component.scss'</span>]
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> PaperDetailComponent <span class="hljs-keyword">implements</span> OnInit {
+  <span class="hljs-comment">// 按以下顺序组织代码：</span>
+  <span class="hljs-comment">// 1. @Input() 属性</span>
+  <span class="hljs-comment">// 2. @Output() 属性</span>
+  <span class="hljs-comment">// 3. public 属性</span>
+  <span class="hljs-comment">// 4. private 属性</span>
+  <span class="hljs-comment">// 5. constructor</span>
+  <span class="hljs-comment">// 6. 生命周期钩子</span>
+  <span class="hljs-comment">// 7. public 方法</span>
+  <span class="hljs-comment">// 8. private 方法</span>
+}
+</div></code></pre>
+<h4 id="323-%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83">3.2.3 服务开发规范</h4>
+<pre class="hljs"><code><div><span class="hljs-meta">@Injectable</span>({
+  providedIn: <span class="hljs-string">'root'</span>
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> PaperService {
+  <span class="hljs-comment">// 使用依赖注入</span>
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> http: HttpClient</span>) {}
+  
+  <span class="hljs-comment">// 返回Observable</span>
+  getPapers(): Observable&lt;Paper[]&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.http.get&lt;Paper[]&gt;(<span class="hljs-string">'/api/papers'</span>);
+  }
+  
+  <span class="hljs-comment">// 错误处理</span>
+  <span class="hljs-keyword">private</span> handleError(error: HttpErrorResponse) {
+    <span class="hljs-comment">// 错误处理逻辑</span>
+  }
+}
+</div></code></pre>
+<h3 id="33-%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0">3.3 关键组件实现</h3>
+<h4 id="331-pdf%E9%A2%84%E8%A7%88%E7%BB%84%E4%BB%B6">3.3.1 PDF预览组件</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> PdfViewerComponent <span class="hljs-keyword">implements</span> OnInit, AfterViewInit {
+  <span class="hljs-meta">@Input</span>() pdfUrl!: <span class="hljs-built_in">string</span>;
+  <span class="hljs-meta">@ViewChild</span>(<span class="hljs-string">'pdfCanvas'</span>) pdfCanvas!: ElementRef&lt;HTMLCanvasElement&gt;;
+  
+  <span class="hljs-keyword">private</span> pdfDoc: <span class="hljs-built_in">any</span> = <span class="hljs-literal">null</span>;
+  currentPage = <span class="hljs-number">1</span>;
+  totalPages = <span class="hljs-number">0</span>;
+  scale: <span class="hljs-built_in">number</span> | <span class="hljs-built_in">string</span> = <span class="hljs-number">1.0</span>;
+  
+  <span class="hljs-keyword">async</span> loadPDF() {
+    <span class="hljs-keyword">const</span> loadingTask = pdfjsLib.getDocument({
+      url: <span class="hljs-keyword">this</span>.pdfUrl,
+      cMapUrl: <span class="hljs-string">'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/'</span>,
+      cMapPacked: <span class="hljs-literal">true</span>
+    });
+    
+    <span class="hljs-keyword">this</span>.pdfDoc = <span class="hljs-keyword">await</span> loadingTask.promise;
+    <span class="hljs-keyword">this</span>.totalPages = <span class="hljs-keyword">this</span>.pdfDoc.numPages;
+    <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.renderPage();
+  }
+}
+</div></code></pre>
+<h4 id="332-github%E9%9B%86%E6%88%90%E6%9C%8D%E5%8A%A1">3.3.2 GitHub集成服务</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> GitHubUploadService {
+  <span class="hljs-keyword">private</span> readonly API_BASE = <span class="hljs-string">'https://api.github.com'</span>;
+  
+  <span class="hljs-keyword">async</span> uploadFile(file: File, path: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">Promise</span>&lt;<span class="hljs-built_in">any</span>&gt; {
+    <span class="hljs-keyword">const</span> base64Content = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.fileToBase64(file);
+    <span class="hljs-keyword">const</span> uploadData = {
+      message: <span class="hljs-string">`Upload <span class="hljs-subst">${file.name}</span>`</span>,
+      content: base64Content,
+      committer: {
+        name: <span class="hljs-string">'Papers Site'</span>,
+        email: <span class="hljs-string">'papers-site@example.com'</span>
+      }
+    };
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.http.put(<span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.API_BASE}</span>/repos/owner/repo/contents/<span class="hljs-subst">${path}</span>`</span>, uploadData);
+  }
+}
+</div></code></pre>
+<h3 id="34-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE">3.4 环境配置</h3>
+<h4 id="341-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE">3.4.1 开发环境配置</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// src/environments/environment.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> environment = {
+  production: <span class="hljs-literal">false</span>,
+  githubPagesMode: <span class="hljs-literal">false</span>,
+  baseHref: <span class="hljs-string">'/'</span>
+};
+</div></code></pre>
+<h4 id="342-%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE">3.4.2 生产环境配置</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// src/environments/environment.prod.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> environment = {
+  production: <span class="hljs-literal">true</span>,
+  githubPagesMode: <span class="hljs-literal">true</span>,
+  baseHref: <span class="hljs-string">'/PaperSite/'</span>
+};
+</div></code></pre>
+<hr>
+<h2 id="4-%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3-testing">4. 测试文档 (Testing)</h2>
+<h3 id="41-%E6%B5%8B%E8%AF%95%E7%AD%96%E7%95%A5">4.1 测试策略</h3>
+<h4 id="411-%E6%B5%8B%E8%AF%95%E9%87%91%E5%AD%97%E5%A1%94">4.1.1 测试金字塔</h4>
+<pre class="hljs"><code><div>┌─────────────────┐
+│   E2E Tests     │  ← 少量端到端测试
+├─────────────────┤
+│ Integration     │  ← 适量集成测试
+│    Tests        │
+├─────────────────┤
+│   Unit Tests    │  ← 大量单元测试
+└─────────────────┘
+</div></code></pre>
+<h4 id="412-%E6%B5%8B%E8%AF%95%E7%B1%BB%E5%9E%8B">4.1.2 测试类型</h4>
+<ul>
+<li><strong>单元测试</strong>: 测试组件、服务、管道的独立功能</li>
+<li><strong>集成测试</strong>: 测试组件间的交互和数据流</li>
+<li><strong>端到端测试</strong>: 测试完整的用户流程</li>
+</ul>
+<h3 id="42-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95">4.2 单元测试</h3>
+<h4 id="421-%E7%BB%84%E4%BB%B6%E6%B5%8B%E8%AF%95%E7%A4%BA%E4%BE%8B">4.2.1 组件测试示例</h4>
+<pre class="hljs"><code><div>describe(<span class="hljs-string">'PaperDetailComponent'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">let</span> component: PaperDetailComponent;
+  <span class="hljs-keyword">let</span> fixture: ComponentFixture&lt;PaperDetailComponent&gt;;
+  <span class="hljs-keyword">let</span> paperService: jasmine.SpyObj&lt;PaperService&gt;;
+
+  beforeEach(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> spy = jasmine.createSpyObj(<span class="hljs-string">'PaperService'</span>, [<span class="hljs-string">'getPaperById'</span>]);
+    
+    TestBed.configureTestingModule({
+      declarations: [PaperDetailComponent],
+      providers: [
+        { provide: PaperService, useValue: spy }
+      ]
+    });
+    
+    fixture = TestBed.createComponent(PaperDetailComponent);
+    component = fixture.componentInstance;
+    paperService = TestBed.inject(PaperService) <span class="hljs-keyword">as</span> jasmine.SpyObj&lt;PaperService&gt;;
+  });
+
+  it(<span class="hljs-string">'should load paper on init'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> mockPaper = { id: <span class="hljs-string">'1'</span>, title: <span class="hljs-string">'Test Paper'</span> };
+    paperService.getPaperById.and.returnValue(<span class="hljs-built_in">Promise</span>.resolve(mockPaper));
+    
+    <span class="hljs-keyword">await</span> component.loadPaper(<span class="hljs-string">'1'</span>);
+    
+    expect(component.paper).toEqual(mockPaper);
+  });
+});
+</div></code></pre>
+<h4 id="422-%E6%9C%8D%E5%8A%A1%E6%B5%8B%E8%AF%95%E7%A4%BA%E4%BE%8B">4.2.2 服务测试示例</h4>
+<pre class="hljs"><code><div>describe(<span class="hljs-string">'PaperService'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">let</span> service: PaperService;
+  <span class="hljs-keyword">let</span> httpMock: HttpTestingController;
+
+  beforeEach(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [PaperService]
+    });
+    
+    service = TestBed.inject(PaperService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  it(<span class="hljs-string">'should fetch papers'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> mockPapers = [{ id: <span class="hljs-string">'1'</span>, title: <span class="hljs-string">'Test Paper'</span> }];
+    
+    service.getPapers().subscribe(<span class="hljs-function"><span class="hljs-params">papers</span> =&gt;</span> {
+      expect(papers).toEqual(mockPapers);
+    });
+    
+    <span class="hljs-keyword">const</span> req = httpMock.expectOne(<span class="hljs-string">'/data/papers.json'</span>);
+    expect(req.request.method).toBe(<span class="hljs-string">'GET'</span>);
+    req.flush({ papers: mockPapers });
+  });
+});
+</div></code></pre>
+<h3 id="43-%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95">4.3 集成测试</h3>
+<h4 id="431-pdf%E9%A2%84%E8%A7%88%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95">4.3.1 PDF预览集成测试</h4>
+<pre class="hljs"><code><div>describe(<span class="hljs-string">'PDF Viewer Integration'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  it(<span class="hljs-string">'should load and display PDF'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> component = fixture.componentInstance;
+    component.pdfUrl = <span class="hljs-string">'/test.pdf'</span>;
+    
+    <span class="hljs-keyword">await</span> component.loadPDF();
+    
+    expect(component.totalPages).toBeGreaterThan(<span class="hljs-number">0</span>);
+    expect(component.currentPage).toBe(<span class="hljs-number">1</span>);
+  });
+});
+</div></code></pre>
+<h3 id="44-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95">4.4 端到端测试</h3>
+<h4 id="441-%E7%94%A8%E6%88%B7%E6%B5%81%E7%A8%8B%E6%B5%8B%E8%AF%95">4.4.1 用户流程测试</h4>
+<pre class="hljs"><code><div>describe(<span class="hljs-string">'Paper browsing flow'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  it(<span class="hljs-string">'should allow user to browse and view paper'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">await</span> page.goto(<span class="hljs-string">'/papers'</span>);
+    
+    <span class="hljs-comment">// 点击第一个论文</span>
+    <span class="hljs-keyword">await</span> page.click(<span class="hljs-string">'.paper-card:first-child'</span>);
+    
+    <span class="hljs-comment">// 验证论文详情页面</span>
+    <span class="hljs-keyword">await</span> expect(page.locator(<span class="hljs-string">'.paper-title'</span>)).toBeVisible();
+    
+    <span class="hljs-comment">// 点击PDF预览</span>
+    <span class="hljs-keyword">await</span> page.click(<span class="hljs-string">'[data-testid="pdf-preview-tab"]'</span>);
+    
+    <span class="hljs-comment">// 验证PDF加载</span>
+    <span class="hljs-keyword">await</span> expect(page.locator(<span class="hljs-string">'.pdf-canvas'</span>)).toBeVisible();
+  });
+});
+</div></code></pre>
+<h3 id="45-%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%8E%87">4.5 测试覆盖率</h3>
+<h4 id="451-%E8%A6%86%E7%9B%96%E7%8E%87%E7%9B%AE%E6%A0%87">4.5.1 覆盖率目标</h4>
+<ul>
+<li><strong>行覆盖率</strong>: &gt; 80%</li>
+<li><strong>分支覆盖率</strong>: &gt; 75%</li>
+<li><strong>函数覆盖率</strong>: &gt; 85%</li>
+</ul>
+<h4 id="452-%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4">4.5.2 测试执行命令</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># 运行单元测试</span>
+ng <span class="hljs-built_in">test</span>
+
+<span class="hljs-comment"># 运行测试并生成覆盖率报告</span>
+ng <span class="hljs-built_in">test</span> --code-coverage
+
+<span class="hljs-comment"># 运行端到端测试</span>
+ng e2e
+</div></code></pre>
+<hr>
+<h2 id="5-%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3-deployment">5. 部署文档 (Deployment)</h2>
+<h3 id="51-%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84">5.1 部署架构</h3>
+<h4 id="511-%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83">5.1.1 部署环境</h4>
+<pre class="hljs"><code><div>┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  开发环境       │    │  GitHub仓库     │    │  GitHub Pages   │
+│  (localhost)    │───►│  (源代码)       │───►│  (生产环境)     │
+│                 │    │                 │    │                 │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+</div></code></pre>
+<h4 id="512-cicd%E6%B5%81%E7%A8%8B">5.1.2 CI/CD流程</h4>
+<pre class="hljs"><code><div>开发者推送代码 → GitHub Actions触发 → 自动构建 → 自动部署到GitHub Pages
+</div></code></pre>
+<h3 id="52-github-pages%E9%83%A8%E7%BD%B2">5.2 GitHub Pages部署</h3>
+<h4 id="521-%E9%83%A8%E7%BD%B2%E9%85%8D%E7%BD%AE">5.2.1 部署配置</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># .github/workflows/deploy.yml</span>
+<span class="hljs-attr">name:</span> <span class="hljs-string">Deploy</span> <span class="hljs-string">to</span> <span class="hljs-string">GitHub</span> <span class="hljs-string">Pages</span>
+
+<span class="hljs-attr">on:</span>
+  <span class="hljs-attr">push:</span>
+    <span class="hljs-attr">branches:</span> <span class="hljs-string">[</span> <span class="hljs-string">main</span> <span class="hljs-string">]</span>
+
+<span class="hljs-attr">jobs:</span>
+  <span class="hljs-attr">build-and-deploy:</span>
+    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span>
+    
+    <span class="hljs-attr">steps:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v3</span>
+    
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Setup</span> <span class="hljs-string">Node.js</span>
+      <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-node@v3</span>
+      <span class="hljs-attr">with:</span>
+        <span class="hljs-attr">node-version:</span> <span class="hljs-string">'18'</span>
+        
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Install</span> <span class="hljs-string">dependencies</span>
+      <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">ci</span>
+      
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span>
+      <span class="hljs-attr">run:</span> <span class="hljs-string">ng</span> <span class="hljs-string">build</span> <span class="hljs-string">--configuration</span> <span class="hljs-string">production</span>
+      
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Deploy</span>
+      <span class="hljs-attr">uses:</span> <span class="hljs-string">peaceiris/actions-gh-pages@v3</span>
+      <span class="hljs-attr">with:</span>
+        <span class="hljs-attr">github_token:</span> <span class="hljs-string">${{</span> <span class="hljs-string">secrets.GITHUB_TOKEN</span> <span class="hljs-string">}}</span>
+        <span class="hljs-attr">publish_dir:</span> <span class="hljs-string">./dist</span>
+</div></code></pre>
+<h4 id="522-%E6%9E%84%E5%BB%BA%E9%85%8D%E7%BD%AE">5.2.2 构建配置</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// angular.json</span>
+{
+  <span class="hljs-attr">"configurations"</span>: {
+    <span class="hljs-attr">"production"</span>: {
+      <span class="hljs-attr">"baseHref"</span>: <span class="hljs-string">"/PaperSite/"</span>,
+      <span class="hljs-attr">"deployUrl"</span>: <span class="hljs-string">"/PaperSite/"</span>,
+      <span class="hljs-attr">"outputHashing"</span>: <span class="hljs-string">"all"</span>,
+      <span class="hljs-attr">"sourceMap"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"optimization"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"buildOptimizer"</span>: <span class="hljs-literal">true</span>
+    }
+  }
+}
+</div></code></pre>
+<h3 id="53-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE">5.3 环境变量配置</h3>
+<h4 id="531-github-secrets">5.3.1 GitHub Secrets</h4>
+<pre class="hljs"><code><div>GITHUB_TOKEN: GitHub访问令牌 (自动生成)
+</div></code></pre>
+<h4 id="532-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">5.3.2 环境配置文件</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// src/environments/environment.prod.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> environment = {
+  production: <span class="hljs-literal">true</span>,
+  githubPagesMode: <span class="hljs-literal">true</span>,
+  baseHref: <span class="hljs-string">'/PaperSite/'</span>,
+  apiUrl: <span class="hljs-string">'https://crudyyds.github.io/PaperSite'</span>
+};
+</div></code></pre>
+<h3 id="54-%E9%83%A8%E7%BD%B2%E6%B8%85%E5%8D%95">5.4 部署清单</h3>
+<h4 id="541-%E9%83%A8%E7%BD%B2%E5%89%8D%E6%A3%80%E6%9F%A5">5.4.1 部署前检查</h4>
+<ul>
+<li><input type="checkbox" id="checkbox0"><label for="checkbox0">代码通过所有测试</label></li>
+<li><input type="checkbox" id="checkbox1"><label for="checkbox1">构建无错误和警告</label></li>
+<li><input type="checkbox" id="checkbox2"><label for="checkbox2">环境配置正确</label></li>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3">静态资源路径配置正确</label></li>
+<li><input type="checkbox" id="checkbox4"><label for="checkbox4">PDF文件路径映射正确</label></li>
+</ul>
+<h4 id="542-%E9%83%A8%E7%BD%B2%E6%AD%A5%E9%AA%A4">5.4.2 部署步骤</h4>
+<ol>
+<li>
+<p><strong>推送代码到main分支</strong></p>
+<pre class="hljs"><code><div>git add .
+git commit -m <span class="hljs-string">"Deploy: update features"</span>
+git push origin main
+</div></code></pre>
+</li>
+<li>
+<p><strong>等待GitHub Actions完成</strong></p>
+<ul>
+<li>监控Actions页面的构建状态</li>
+<li>检查构建日志确认无错误</li>
+</ul>
+</li>
+<li>
+<p><strong>验证部署结果</strong></p>
+<ul>
+<li>访问生产环境URL</li>
+<li>测试关键功能</li>
+<li>检查PDF预览功能</li>
+</ul>
+</li>
+</ol>
+<h4 id="543-%E5%9B%9E%E6%BB%9A%E7%AD%96%E7%95%A5">5.4.3 回滚策略</h4>
+<p>如果部署出现问题：</p>
+<ol>
+<li><strong>快速回滚</strong>: 恢复到上一个工作版本的commit</li>
+<li><strong>修复部署</strong>: 修复问题后重新部署</li>
+<li><strong>热修复</strong>: 对关键问题进行紧急修复</li>
+</ol>
+<h3 id="55-%E7%9B%91%E6%8E%A7%E5%92%8C%E7%BB%B4%E6%8A%A4">5.5 监控和维护</h3>
+<h4 id="551-%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7">5.5.1 性能监控</h4>
+<ul>
+<li><strong>页面加载时间</strong>: 使用浏览器开发者工具监控</li>
+<li><strong>资源大小</strong>: 监控bundle大小和资源加载</li>
+<li><strong>用户体验</strong>: 监控核心功能的响应时间</li>
+</ul>
+<h4 id="552-%E6%97%A5%E5%B8%B8%E7%BB%B4%E6%8A%A4">5.5.2 日常维护</h4>
+<ul>
+<li><strong>依赖更新</strong>: 定期更新npm依赖包</li>
+<li><strong>安全更新</strong>: 及时应用安全补丁</li>
+<li><strong>性能优化</strong>: 定期检查和优化性能</li>
+<li><strong>备份</strong>: 定期备份重要数据和配置</li>
+</ul>
+<h4 id="553-%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86">5.5.3 故障处理</h4>
+<pre class="hljs"><code><div>故障发现 → 问题诊断 → 影响评估 → 修复方案 → 实施修复 → 验证结果 → 总结改进
+</div></code></pre>
+<hr>
+<h2 id="6-%E6%80%BB%E7%BB%93">6. 总结</h2>
+<h3 id="61-%E9%A1%B9%E7%9B%AE%E8%BE%BE%E6%88%90%E7%9B%AE%E6%A0%87">6.1 项目达成目标</h3>
+<ul>
+<li>达成一个较为完整的论文管理系统，符合基本需求（真实需求）</li>
+<li>实现了CICD</li>
+<li>依托于github平台，该项目资源完全免费</li>
+</ul>
+<h3 id="62-%E6%9C%AA%E6%9D%A5%E5%B1%95%E6%9C%9B">6.2 未来展望</h3>
+<ul>
+<li>添加自动分析论文，并填充参数功能</li>
+<li>添加论文笔记功能</li>
+<li>横向使用多github仓库，扩展项目存储空间</li>
+<li>添加博客功能</li>
+</ul>
+<hr>
+
+</body>
+</html>
