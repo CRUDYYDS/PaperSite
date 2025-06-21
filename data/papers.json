@@ -153,13 +153,58 @@
       "filePath": "papers/2025/ai/1750435130388_bert__pre_training_of_deep_bidirectional_transform.pdf",
       "downloadCount": 0,
       "createdAt": "2025-06-20T15:58:56.820Z"
+    },
+    {
+      "id": "mc5hwnk03pvgf",
+      "title": "ImageNet Classification with Deep Convolutional Neural Networks",
+      "authors": [
+        "Alex Krizhevsky"
+      ],
+      "abstract": "We trained a large, deep convolutional neural network to classify the 1.2 million\nhigh-resolution images in the ImageNet LSVRC-2010 contest into the 1000 different classes. On the test data, we achieved top-1 and top-5 error rates of 37.5%\nand 17.0% which is considerably better than the previous state-of-the-art. The\nneural network, which has 60 million parameters and 650,000 neurons, consists\nof five convolutional layers, some of which are followed by max-pooling layers,\nand three fully-connected layers with a final 1000-way softmax. To make training faster, we used non-saturating neurons and a very efficient GPU implementation of the convolution operation. To reduce overfitting in the fully-connected\nlayers we employed a recently-developed regularization method called “dropout”\nthat proved to be very effective. We also entered a variant of this model in the\nILSVRC-2012 competition and achieved a winning top-5 test error rate of 15.3%,\ncompared to 26.2% achieved by the second-best entry.\n",
+      "keywords": [
+        "alexnet"
+      ],
+      "category": "人工智能",
+      "publishDate": "2025-06-21",
+      "fileName": "AlexNet.pdf",
+      "fileSize": 1418820,
+      "repository": "master",
+      "filePath": "papers/2025/ai/1750465402585_imagenet_classification_with_deep_convolutional_ne.pdf",
+      "downloadCount": 0,
+      "createdAt": "2025-06-21T00:23:26.016Z"
+    },
+    {
+      "id": "mc5kth4ln4ui3",
+      "title": "Attention Is All You Need",
+      "authors": [
+        "Ashish Vaswani∗",
+        "Noam Shazeer∗",
+        "Niki Parmar∗",
+        "Jakob Uszkoreit∗",
+        "Llion Jones∗",
+        "Aidan N. Gomez∗ †",
+        "Łukasz Kaiser∗",
+        "Illia Polosukhin∗ ‡"
+      ],
+      "abstract": "The dominant sequence transduction models are based on complex recurrent or\nconvolutional neural networks that include an encoder and a decoder. The best\nperforming models also connect the encoder and decoder through an attention\nmechanism. We propose a new simple network architecture, the Transformer,\nbased solely on attention mechanisms, dispensing with recurrence and convolutions\nentirely. Experiments on two machine translation tasks show these models to\nbe superior in quality while being more parallelizable and requiring significantly\nless time to train. Our model achieves 28.4 BLEU on the WMT 2014 Englishto-German translation task, improving over the existing best results, including\nensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task,\nour model establishes a new single-model state-of-the-art BLEU score of 41.8 after\ntraining for 3.5 days on eight GPUs, a small fraction of the training costs of the\nbest models from the literature. We show that the Transformer generalizes well to\nother tasks by applying it successfully to English constituency parsing both with\nlarge and limited training data.\n",
+      "keywords": [
+        "Transformer"
+      ],
+      "category": "人工智能",
+      "publishDate": "2025-06-21",
+      "fileName": "Transformer.pdf",
+      "fileSize": 2215244,
+      "repository": "master",
+      "filePath": "papers/2025/ai/1750470293213_attention_is_all_you_need.pdf",
+      "downloadCount": 0,
+      "createdAt": "2025-06-21T01:44:56.565Z"
     }
   ],
   "metadata": {
-    "totalCount": 5,
-    "lastUpdated": "2025-06-20T15:58:57.508Z",
+    "totalCount": 7,
+    "lastUpdated": "2025-06-21T01:44:57.138Z",
     "categories": {
-      "人工智能": 5
+      "人工智能": 7
     }
   }
 }
